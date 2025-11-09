@@ -4,4 +4,34 @@
    <FileRef
       location = "self:">
    </FileRef>
+   <FileRef
+      location = "group:AdManager.swift">
+   </FileRef>
+   <FileRef
+      location = "group:INTERSTITIAL_AD_SETUP.md">
+   </FileRef>
+   <FileRef
+      location = "group:INTERSTITIAL_AD_IMPLEMENTATION.md">
+   </FileRef>
+   <FileRef
+      location = "group:QUICK_START_ADS.md">
+   </FileRef>
+   <FileRef
+      location = "group:AD_FLOW_DIAGRAM.md">
+   </FileRef>
+   <FileRef
+      location = "group:AD_IMPLEMENTATION_CHECKLIST.md">
+   </FileRef>
+   <FileRef
+      location = "group:WINNING_LINE_DESIGN.md">
+   </FileRef>
+   <FileRef
+      location = "group:WINNING_LINE_SUMMARY.md">
+   </FileRef>
+   <FileRef
+      location = "group:AD_MANAGER_DISABLED.md">
+   </FileRef>
+   <FileRef
+      location = "group:BUILD_ERRORS_FIXED.md">
+   </FileRef>
 </Workspace>

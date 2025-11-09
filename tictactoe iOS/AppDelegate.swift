@@ -14,7 +14,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        // Initialize ads (only if Google Mobile Ads SDK is available)
+        #if canImport(GoogleMobileAds)
+        AdManager.shared.initializeAds()
+        #endif
+        
+        // Authenticate with Game Center
+        Task { @MainActor in
+            GameKitManager.shared.authenticatePlayer()
+        }
+        
         return true
     }
 
