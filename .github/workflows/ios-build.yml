@@ -24,9 +24,8 @@ jobs:
     - name: Checkout Repository
       uses: actions/checkout@v4
       
-    - name: Select Xcode Version
+    - name: Show Xcode Version
       run: |
-        sudo xcode-select -switch /Applications/Xcode_15.4.app
         xcodebuild -version
         swift --version
         
