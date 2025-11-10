@@ -11,6 +11,9 @@ env:
   SCHEME: "tictactoe iOS"
   PROJECT: "tictactoe.xcodeproj"
   CONFIGURATION: Release
+
+permissions:
+  contents: read
   
 jobs:
   build:
