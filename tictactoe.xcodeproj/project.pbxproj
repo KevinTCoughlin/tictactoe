@@ -11,7 +11,23 @@
 		0B1653562EC170AD0010E409 /* SoundSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B1653552EC170AD0010E409 /* SoundSettingsView.swift */; };
 		0B16535A2EC170EB0010E409 /* generate_sounds.sh in Resources */ = {isa = PBXBuildFile; fileRef = 0B1653592EC170EB0010E409 /* generate_sounds.sh */; };
 		0B16535E2EC171210010E409 /* SoundQuickReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B16535D2EC171210010E409 /* SoundQuickReference.swift */; };
+		0BFEDBF52ECA727F008154E4 /* GameBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BFEDBF42ECA727F008154E4 /* GameBoard.swift */; };
+		0BFEDBF72ECA728D008154E4 /* GridLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BFEDBF62ECA728D008154E4 /* GridLayout.swift */; };
+		0BFEDBF92ECA729C008154E4 /* GridRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BFEDBF82ECA729C008154E4 /* GridRenderer.swift */; };
+		0BFEDBFB2ECA72AC008154E4 /* MarkRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BFEDBFA2ECA72AC008154E4 /* MarkRenderer.swift */; };
+		0BFEDBFD2ECA72C7008154E4 /* WinningLineAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BFEDBFC2ECA72C7008154E4 /* WinningLineAnimator.swift */; };
+		0BFEDC1B2ECA976E008154E4 /* GameBoardTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BFEDBFE2ECA72E2008154E4 /* GameBoardTests.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		0BFEDC142ECA9755008154E4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0BB1DF9B2EB7C92A00B5F7ED /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0BB1DFA72EB7C92C00B5F7ED;
+			remoteInfo = "tictactoe iOS";
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		0B1653532EC170840010E409 /* SoundManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundManager.swift; sourceTree = "<group>"; };
@@ -19,6 +35,13 @@
 		0B1653592EC170EB0010E409 /* generate_sounds.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = generate_sounds.sh; sourceTree = "<group>"; };
 		0B16535D2EC171210010E409 /* SoundQuickReference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundQuickReference.swift; sourceTree = "<group>"; };
 		0BB1DFA82EB7C92C00B5F7ED /* tictactoe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tictactoe.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		0BFEDBF42ECA727F008154E4 /* GameBoard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameBoard.swift; sourceTree = "<group>"; };
+		0BFEDBF62ECA728D008154E4 /* GridLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridLayout.swift; sourceTree = "<group>"; };
+		0BFEDBF82ECA729C008154E4 /* GridRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridRenderer.swift; sourceTree = "<group>"; };
+		0BFEDBFA2ECA72AC008154E4 /* MarkRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkRenderer.swift; sourceTree = "<group>"; };
+		0BFEDBFC2ECA72C7008154E4 /* WinningLineAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinningLineAnimator.swift; sourceTree = "<group>"; };
+		0BFEDBFE2ECA72E2008154E4 /* GameBoardTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameBoardTests.swift; sourceTree = "<group>"; };
+		0BFEDC102ECA9755008154E4 /* tictactoeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = tictactoeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -35,6 +58,13 @@
 			);
 			target = 0BB1DFA72EB7C92C00B5F7ED /* tictactoe iOS */;
 		};
+		0BFEDC1A2ECA975C008154E4 /* Exceptions for "tictactoe Shared" folder in "tictactoeTests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				GameBoardTests.swift,
+			);
+			target = 0BFEDC0F2ECA9755008154E4 /* tictactoeTests */;
+		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -42,6 +72,7 @@
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
 				0BB1DFB92EB7C92C00B5F7ED /* Exceptions for "tictactoe Shared" folder in "tictactoe iOS" target */,
+				0BFEDC1A2ECA975C008154E4 /* Exceptions for "tictactoe Shared" folder in "tictactoeTests" target */,
 			);
 			path = "tictactoe Shared";
 			sourceTree = "<group>";
@@ -51,10 +82,22 @@
 			path = "tictactoe iOS";
 			sourceTree = "<group>";
 		};
+		0BFEDC112ECA9755008154E4 /* tictactoeTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = tictactoeTests;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		0BB1DFA52EB7C92C00B5F7ED /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0BFEDC0D2ECA9755008154E4 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -69,11 +112,18 @@
 			children = (
 				0BB1DF9F2EB7C92B00B5F7ED /* tictactoe Shared */,
 				0BB1DFAA2EB7C92C00B5F7ED /* tictactoe iOS */,
+				0BFEDC112ECA9755008154E4 /* tictactoeTests */,
 				0BB1DFA92EB7C92C00B5F7ED /* Products */,
 				0B1653532EC170840010E409 /* SoundManager.swift */,
 				0B1653552EC170AD0010E409 /* SoundSettingsView.swift */,
 				0B1653592EC170EB0010E409 /* generate_sounds.sh */,
 				0B16535D2EC171210010E409 /* SoundQuickReference.swift */,
+				0BFEDBF42ECA727F008154E4 /* GameBoard.swift */,
+				0BFEDBF62ECA728D008154E4 /* GridLayout.swift */,
+				0BFEDBF82ECA729C008154E4 /* GridRenderer.swift */,
+				0BFEDBFA2ECA72AC008154E4 /* MarkRenderer.swift */,
+				0BFEDBFC2ECA72C7008154E4 /* WinningLineAnimator.swift */,
+				0BFEDBFE2ECA72E2008154E4 /* GameBoardTests.swift */,
 			);
 			sourceTree = "<group>";
 		};
@@ -81,6 +131,7 @@
 			isa = PBXGroup;
 			children = (
 				0BB1DFA82EB7C92C00B5F7ED /* tictactoe.app */,
+				0BFEDC102ECA9755008154E4 /* tictactoeTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -110,6 +161,29 @@
 			productReference = 0BB1DFA82EB7C92C00B5F7ED /* tictactoe.app */;
 			productType = "com.apple.product-type.application";
 		};
+		0BFEDC0F2ECA9755008154E4 /* tictactoeTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0BFEDC182ECA9757008154E4 /* Build configuration list for PBXNativeTarget "tictactoeTests" */;
+			buildPhases = (
+				0BFEDC0C2ECA9755008154E4 /* Sources */,
+				0BFEDC0D2ECA9755008154E4 /* Frameworks */,
+				0BFEDC0E2ECA9755008154E4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				0BFEDC152ECA9755008154E4 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				0BFEDC112ECA9755008154E4 /* tictactoeTests */,
+			);
+			name = tictactoeTests;
+			packageProductDependencies = (
+			);
+			productName = tictactoeTests;
+			productReference = 0BFEDC102ECA9755008154E4 /* tictactoeTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -122,6 +196,10 @@
 				TargetAttributes = {
 					0BB1DFA72EB7C92C00B5F7ED = {
 						CreatedOnToolsVersion = 26.1;
+					};
+					0BFEDC0F2ECA9755008154E4 = {
+						CreatedOnToolsVersion = 26.1.1;
+						TestTargetID = 0BB1DFA72EB7C92C00B5F7ED;
 					};
 				};
 			};
@@ -140,6 +218,7 @@
 			projectRoot = "";
 			targets = (
 				0BB1DFA72EB7C92C00B5F7ED /* tictactoe iOS */,
+				0BFEDC0F2ECA9755008154E4 /* tictactoeTests */,
 			);
 		};
 /* End PBXProject section */
@@ -153,6 +232,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		0BFEDC0E2ECA9755008154E4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -160,13 +246,34 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0BFEDBFB2ECA72AC008154E4 /* MarkRenderer.swift in Sources */,
+				0BFEDBFD2ECA72C7008154E4 /* WinningLineAnimator.swift in Sources */,
 				0B16535E2EC171210010E409 /* SoundQuickReference.swift in Sources */,
+				0BFEDBF72ECA728D008154E4 /* GridLayout.swift in Sources */,
+				0BFEDBF92ECA729C008154E4 /* GridRenderer.swift in Sources */,
+				0BFEDBF52ECA727F008154E4 /* GameBoard.swift in Sources */,
 				0B1653542EC170840010E409 /* SoundManager.swift in Sources */,
 				0B1653562EC170AD0010E409 /* SoundSettingsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		0BFEDC0C2ECA9755008154E4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0BFEDC1B2ECA976E008154E4 /* GameBoardTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		0BFEDC152ECA9755008154E4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0BB1DFA72EB7C92C00B5F7ED /* tictactoe iOS */;
+			targetProxy = 0BFEDC142ECA9755008154E4 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		0BB1DFBB2EB7C92C00B5F7ED /* Debug */ = {
@@ -358,6 +465,53 @@
 			};
 			name = Release;
 		};
+		0BFEDC162ECA9755008154E4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 9L45FNA7XM;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.1;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cascadiacollections.tictactoeTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/tictactoe.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/tictactoe";
+			};
+			name = Debug;
+		};
+		0BFEDC172ECA9755008154E4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 9L45FNA7XM;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.1;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cascadiacollections.tictactoeTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/tictactoe.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/tictactoe";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -375,6 +529,15 @@
 			buildConfigurations = (
 				0BB1DFBB2EB7C92C00B5F7ED /* Debug */,
 				0BB1DFBC2EB7C92C00B5F7ED /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0BFEDC182ECA9757008154E4 /* Build configuration list for PBXNativeTarget "tictactoeTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0BFEDC162ECA9755008154E4 /* Debug */,
+				0BFEDC172ECA9755008154E4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
