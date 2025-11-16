@@ -246,6 +246,9 @@ final class GameScene: SKScene {
         addChild(markLabel)
         animateMark(markLabel)
         
+        // Play turn sound
+        SoundManager.shared.playTurn()
+        
         if board.isGameOver {
             handleGameOver()
         }
@@ -285,6 +288,12 @@ final class GameScene: SKScene {
         if let winLine = createWinningLineShape() {
             addChild(winLine)
             fadeGridLines()
+            
+            // Play winning sound
+            SoundManager.shared.playWin()
+        } else if board.isDraw {
+            // Play draw sound
+            SoundManager.shared.playDraw()
         }
     }
     
@@ -371,6 +380,9 @@ final class GameScene: SKScene {
         removeWinningLine()
         restoreGridLines()
         updateStatusLabel()
+        
+        // Play reset sound
+        SoundManager.shared.playReset()
         
         // Increment ad counter and potentially show an ad (only if SDK available)
         #if os(iOS) && canImport(GoogleMobileAds)
