@@ -11,10 +11,6 @@
 		0B1653562EC170AD0010E409 /* SoundSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B1653552EC170AD0010E409 /* SoundSettingsView.swift */; };
 		0B16535A2EC170EB0010E409 /* generate_sounds.sh in Resources */ = {isa = PBXBuildFile; fileRef = 0B1653592EC170EB0010E409 /* generate_sounds.sh */; };
 		0B16535E2EC171210010E409 /* SoundQuickReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B16535D2EC171210010E409 /* SoundQuickReference.swift */; };
-		0BFEDBF72ECA728D008154E4 /* GridLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BFEDBF62ECA728D008154E4 /* GridLayout.swift */; };
-		0BFEDBF92ECA729C008154E4 /* GridRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BFEDBF82ECA729C008154E4 /* GridRenderer.swift */; };
-		0BFEDBFB2ECA72AC008154E4 /* MarkRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BFEDBFA2ECA72AC008154E4 /* MarkRenderer.swift */; };
-		0BFEDBFD2ECA72C7008154E4 /* WinningLineAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BFEDBFC2ECA72C7008154E4 /* WinningLineAnimator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -33,10 +29,6 @@
 		0B1653592EC170EB0010E409 /* generate_sounds.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = generate_sounds.sh; sourceTree = "<group>"; };
 		0B16535D2EC171210010E409 /* SoundQuickReference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundQuickReference.swift; sourceTree = "<group>"; };
 		0BB1DFA82EB7C92C00B5F7ED /* tictactoe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tictactoe.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		0BFEDBF62ECA728D008154E4 /* GridLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridLayout.swift; sourceTree = "<group>"; };
-		0BFEDBF82ECA729C008154E4 /* GridRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridRenderer.swift; sourceTree = "<group>"; };
-		0BFEDBFA2ECA72AC008154E4 /* MarkRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkRenderer.swift; sourceTree = "<group>"; };
-		0BFEDBFC2ECA72C7008154E4 /* WinningLineAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinningLineAnimator.swift; sourceTree = "<group>"; };
 		0BFEDC102ECA9755008154E4 /* tictactoeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = tictactoeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -114,10 +106,6 @@
 				0B1653552EC170AD0010E409 /* SoundSettingsView.swift */,
 				0B1653592EC170EB0010E409 /* generate_sounds.sh */,
 				0B16535D2EC171210010E409 /* SoundQuickReference.swift */,
-				0BFEDBF62ECA728D008154E4 /* GridLayout.swift */,
-				0BFEDBF82ECA729C008154E4 /* GridRenderer.swift */,
-				0BFEDBFA2ECA72AC008154E4 /* MarkRenderer.swift */,
-				0BFEDBFC2ECA72C7008154E4 /* WinningLineAnimator.swift */,
 			);
 			sourceTree = "<group>";
 		};
@@ -240,11 +228,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0BFEDBFB2ECA72AC008154E4 /* MarkRenderer.swift in Sources */,
-				0BFEDBFD2ECA72C7008154E4 /* WinningLineAnimator.swift in Sources */,
 				0B16535E2EC171210010E409 /* SoundQuickReference.swift in Sources */,
-				0BFEDBF72ECA728D008154E4 /* GridLayout.swift in Sources */,
-				0BFEDBF92ECA729C008154E4 /* GridRenderer.swift in Sources */,
 				0B1653542EC170840010E409 /* SoundManager.swift in Sources */,
 				0B1653562EC170AD0010E409 /* SoundSettingsView.swift in Sources */,
 			);
