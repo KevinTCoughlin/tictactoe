@@ -16,7 +16,6 @@
 		0BFEDBF92ECA729C008154E4 /* GridRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BFEDBF82ECA729C008154E4 /* GridRenderer.swift */; };
 		0BFEDBFB2ECA72AC008154E4 /* MarkRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BFEDBFA2ECA72AC008154E4 /* MarkRenderer.swift */; };
 		0BFEDBFD2ECA72C7008154E4 /* WinningLineAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BFEDBFC2ECA72C7008154E4 /* WinningLineAnimator.swift */; };
-		0BFEDC1B2ECA976E008154E4 /* GameBoardTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BFEDBFE2ECA72E2008154E4 /* GameBoardTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,7 +39,6 @@
 		0BFEDBF82ECA729C008154E4 /* GridRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridRenderer.swift; sourceTree = "<group>"; };
 		0BFEDBFA2ECA72AC008154E4 /* MarkRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkRenderer.swift; sourceTree = "<group>"; };
 		0BFEDBFC2ECA72C7008154E4 /* WinningLineAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinningLineAnimator.swift; sourceTree = "<group>"; };
-		0BFEDBFE2ECA72E2008154E4 /* GameBoardTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameBoardTests.swift; sourceTree = "<group>"; };
 		0BFEDC102ECA9755008154E4 /* tictactoeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = tictactoeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -123,7 +121,6 @@
 				0BFEDBF82ECA729C008154E4 /* GridRenderer.swift */,
 				0BFEDBFA2ECA72AC008154E4 /* MarkRenderer.swift */,
 				0BFEDBFC2ECA72C7008154E4 /* WinningLineAnimator.swift */,
-				0BFEDBFE2ECA72E2008154E4 /* GameBoardTests.swift */,
 			);
 			sourceTree = "<group>";
 		};
@@ -261,7 +258,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0BFEDC1B2ECA976E008154E4 /* GameBoardTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
