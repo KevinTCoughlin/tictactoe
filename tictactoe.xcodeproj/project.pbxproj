@@ -38,11 +38,16 @@
 			membershipExceptions = (
 				Actions.sks,
 				Assets.xcassets,
+				GameBoard.swift,
 				GameCenterButton.swift,
 				GameCenterStatusView.swift,
 				GameKitManager.swift,
 				GameScene.sks,
 				GameScene.swift,
+				GridLayout.swift,
+				GridRenderer.swift,
+				MarkRenderer.swift,
+				WinningLineAnimator.swift,
 			);
 			target = 0BB1DFA72EB7C92C00B5F7ED /* tictactoe iOS */;
 		};
