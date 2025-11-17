@@ -82,7 +82,7 @@ To build and run the iOS application:
      -scheme "tictactoe iOS" \
      -configuration Debug \
      -sdk iphonesimulator \
-     -destination 'platform=iOS Simulator,name=iPhone 15'
+     -destination 'platform=iOS Simulator,name=iPhone 16 Pro'
    ```
 
 ## Customization
