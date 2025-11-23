@@ -50,7 +50,7 @@ public final class AICommentator: ObservableObject {
     private let speechSynthesizer = AVSpeechSynthesizer()
     
     /// Whether voice commentary is enabled
-    @Published public var voiceEnabled: Bool = true // @todo - force
+    @Published public var voiceEnabled: Bool = false // Default to false for privacy; user must opt-in
     
     // MARK: - Initialization
     
