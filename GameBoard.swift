@@ -8,7 +8,7 @@
 import Foundation
 
 /// Represents a player in the tic-tac-toe game.
-public enum Player {
+public enum Player: Sendable {
     case x
     case o
     
@@ -37,26 +37,39 @@ public enum Player {
 /// ---------
 /// 6 | 7 | 8
 /// ```
-public struct GameBoard {
+public struct GameBoard: Sendable, Equatable, Hashable {
     
     // MARK: - Types
     
     /// Represents a winning pattern with its bitmask and visual endpoints.
-    typealias WinningPattern = (mask: Int, startCell: Int, endCell: Int)
+    struct WinningPattern: Sendable {
+        let mask: Int
+        let startCell: Int
+        let endCell: Int
+        
+        init(mask: Int, startCell: Int, endCell: Int) {
+            self.mask = mask
+            self.startCell = startCell
+            self.endCell = endCell
+        }
+    }
     
     // MARK: - State
     
     /// Bitmask representing X player's occupied cells.
-    private(set) var xMask: Int = 0
+    public private(set) var xMask: Int = 0
     
     /// Bitmask representing O player's occupied cells.
-    private(set) var oMask: Int = 0
+    public private(set) var oMask: Int = 0
     
     /// The player whose turn it is to move.
     private(set) var currentPlayer: Player = .x
     
     /// The player who made the most recent move.
     private(set) var lastPlayer: Player = .x
+    
+    /// History of moves made on this board (cell indices in order).
+    public private(set) var moveHistory: [Int] = []
     
     // MARK: - Constants
     
@@ -66,16 +79,16 @@ public struct GameBoard {
     /// a winning line, along with the start and end cell indices for drawing.
     static let winningPatterns: [WinningPattern] = [
         // Rows
-        (mask: 0b111_000_000, startCell: 0, endCell: 2),
-        (mask: 0b000_111_000, startCell: 3, endCell: 5),
-        (mask: 0b000_000_111, startCell: 6, endCell: 8),
+        WinningPattern(mask: 0b111_000_000, startCell: 0, endCell: 2),
+        WinningPattern(mask: 0b000_111_000, startCell: 3, endCell: 5),
+        WinningPattern(mask: 0b000_000_111, startCell: 6, endCell: 8),
         // Columns
-        (mask: 0b100_100_100, startCell: 0, endCell: 6),
-        (mask: 0b010_010_010, startCell: 1, endCell: 7),
-        (mask: 0b001_001_001, startCell: 2, endCell: 8),
+        WinningPattern(mask: 0b100_100_100, startCell: 0, endCell: 6),
+        WinningPattern(mask: 0b010_010_010, startCell: 1, endCell: 7),
+        WinningPattern(mask: 0b001_001_001, startCell: 2, endCell: 8),
         // Diagonals
-        (mask: 0b100_010_001, startCell: 0, endCell: 8),
-        (mask: 0b001_010_100, startCell: 2, endCell: 6)
+        WinningPattern(mask: 0b100_010_001, startCell: 0, endCell: 8),
+        WinningPattern(mask: 0b001_010_100, startCell: 2, endCell: 6)
     ]
     
     /// Bitmask representing all nine cells occupied.
@@ -93,13 +106,12 @@ public struct GameBoard {
     /// Returns `.x` or `.o` if that player has achieved a winning pattern,
     /// or `nil` if no player has won yet.
     var winner: Player? {
-        for pattern in Self.winningPatterns {
-            if hasWinningPattern(mask: xMask, pattern: pattern.mask) {
-                return .x
-            }
-            if hasWinningPattern(mask: oMask, pattern: pattern.mask) {
-                return .o
-            }
+        // Check X first since we're checking both anyway
+        if Self.winningPatterns.contains(where: { hasWinningPattern(mask: xMask, pattern: $0.mask) }) {
+            return .x
+        }
+        if Self.winningPatterns.contains(where: { hasWinningPattern(mask: oMask, pattern: $0.mask) }) {
+            return .o
         }
         return nil
     }
@@ -130,6 +142,22 @@ public struct GameBoard {
     
     // MARK: - Public Methods
     
+    /// Returns the player occupying the specified cell, if any.
+    ///
+    /// - Parameter index: The cell index (0-8) to check.
+    /// - Returns: The player (`.x` or `.o`) if the cell is occupied, `nil` otherwise.
+    public func player(at index: Int) -> Player? {
+        guard isValidIndex(index) else { return nil }
+        let cellBit = bitMask(for: index)
+        
+        if (xMask & cellBit) != 0 {
+            return .x
+        } else if (oMask & cellBit) != 0 {
+            return .o
+        }
+        return nil
+    }
+    
     /// Attempts to place a mark for the current player at the specified cell.
     ///
     /// - Parameter index: The cell index (0-8) where the current player wants to move.
@@ -146,7 +174,40 @@ public struct GameBoard {
         guard !isGameOver else { return false }
         
         updateMask(for: currentPlayer, at: index)
+        moveHistory.append(index)
         advanceTurn()
+        
+        return true
+    }
+    
+    /// Undoes the last move, if any.
+    ///
+    /// - Returns: `true` if a move was undone, `false` if there's no move to undo.
+    @discardableResult
+    public mutating func undoLastMove() -> Bool {
+        guard let lastMoveIndex = moveHistory.popLast() else { return false }
+        
+        let cellBit = bitMask(for: lastMoveIndex)
+        
+        // Determine which player made the last move and remove it
+        if (xMask & cellBit) != 0 {
+            xMask &= ~cellBit
+        } else if (oMask & cellBit) != 0 {
+            oMask &= ~cellBit
+        }
+        
+        // Revert the turn
+        currentPlayer = lastPlayer
+        
+        // Update lastPlayer based on move history
+        if moveHistory.isEmpty {
+            lastPlayer = .x
+        } else {
+            // Determine who made the second-to-last move
+            let secondToLastIndex = moveHistory[moveHistory.count - 1]
+            let secondToLastBit = bitMask(for: secondToLastIndex)
+            lastPlayer = (xMask & secondToLastBit) != 0 ? .x : .o
+        }
         
         return true
     }
@@ -159,6 +220,7 @@ public struct GameBoard {
         oMask = 0
         currentPlayer = .x
         lastPlayer = .x
+        moveHistory.removeAll()
     }
     
     // MARK: - Private Helpers
@@ -199,5 +261,59 @@ public struct GameBoard {
     private mutating func advanceTurn() {
         lastPlayer = currentPlayer
         currentPlayer = currentPlayer.opponent
+    }
+}
+
+// MARK: - CustomStringConvertible
+
+extension GameBoard: CustomStringConvertible {
+    /// A textual representation of the game board.
+    ///
+    /// Returns a 3×3 grid showing X, O, or · (for empty cells).
+    public var description: String {
+        var result = ""
+        for row in 0..<3 {
+            for col in 0..<3 {
+                let index = row * 3 + col
+                result += player(at: index)?.symbol ?? "·"
+                if col < 2 { result += " " }
+            }
+            if row < 2 { result += "\n" }
+        }
+        return result
+    }
+}
+
+// MARK: - CustomDebugStringConvertible
+
+extension GameBoard: CustomDebugStringConvertible {
+    /// A detailed debug description including internal state.
+    public var debugDescription: String {
+        var result = "GameBoard:\n"
+        result += description
+        result += "\n"
+        result += "Current Player: \(currentPlayer.symbol)\n"
+        result += "X Mask: \(String(xMask, radix: 2).leftPadding(toLength: 9, withPad: "0"))\n"
+        result += "O Mask: \(String(oMask, radix: 2).leftPadding(toLength: 9, withPad: "0"))\n"
+        result += "Moves: \(moveHistory.count)\n"
+        if let winner = winner {
+            result += "Winner: \(winner.symbol)"
+        } else if isDraw {
+            result += "Draw"
+        }
+        return result
+    }
+}
+
+// MARK: - String Extension
+
+private extension String {
+    func leftPadding(toLength: Int, withPad character: Character) -> String {
+        let stringLength = self.count
+        if stringLength < toLength {
+            return String(repeatElement(character, count: toLength - stringLength)) + self
+        } else {
+            return self
+        }
     }
 }
