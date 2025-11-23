@@ -127,12 +127,7 @@ final class AICommentaryManager {
         }
     }
     
-    /// Changes commentary style
-    func setStyle(_ style: AICommentator.CommentaryStyle) {
-        // Would need to recreate commentator with new style
-        // For now, requires restart
-        logger.info("Commentary style change requested: \(String(describing: style))")
-    }
+    // (setStyle(_:) removed: changing commentary style at runtime is not supported)
     
     /// Resets commentary state
     func reset() {
