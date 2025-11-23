@@ -409,8 +409,8 @@ struct AITests {
 ## 🎓 Learning Resources
 
 ### WWDC Videos
-- "What's new in Foundation Models" (WWDC 2025)
-- "Adopting Foundation Models in your app" (WWDC 2025)
+- "What's new in Foundation Models" (WWDC 2025) *(placeholder title, verify actual session name)*
+- "Adopting Foundation Models in your app" (WWDC 2025) *(placeholder title, verify actual session name)*
 
 ### Apple Documentation
 - [Foundation Models Framework](https://developer.apple.com/documentation/FoundationModels)
