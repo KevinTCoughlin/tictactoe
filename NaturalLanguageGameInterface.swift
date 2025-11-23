@@ -70,9 +70,11 @@ public final class NaturalLanguageGameInterface {
     ) async throws -> CommandInterpretation {
         // Create a new session without tools for now
         // The board state will be included in the prompt instead
-        session = LanguageModelSession(
-            instructions: createInstructions()
-        )
+        if session == nil {
+            session = LanguageModelSession(
+                instructions: createInstructions()
+            )
+        }
         
         guard let session = session else {
             throw InterfaceError.sessionNotAvailable
