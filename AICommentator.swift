@@ -7,13 +7,15 @@
 
 import Foundation
 import FoundationModels
+import AVFoundation
+import Combine
 
 /// Provides real-time commentary and analysis of tic-tac-toe games.
 ///
 /// The AI commentator watches the game unfold and provides entertaining
 /// play-by-play commentary with strategic insights, similar to a sports announcer.
 @MainActor
-public final class AICommentator {
+public final class AICommentator: ObservableObject {
     
     // MARK: - Types
     
@@ -43,6 +45,12 @@ public final class AICommentator {
     private var session: LanguageModelSession?
     private let style: CommentaryStyle
     private var gameHistory: [String] = []
+    
+    /// Speech synthesizer for voice commentary
+    private let speechSynthesizer = AVSpeechSynthesizer()
+    
+    /// Whether voice commentary is enabled
+    @Published public var voiceEnabled: Bool = true // @todo - force
     
     // MARK: - Initialization
     
@@ -92,6 +100,11 @@ public final class AICommentator {
         // Store for context
         gameHistory.append(response.content.playByPlay)
         
+        // Speak the commentary if voice is enabled
+        if voiceEnabled {
+            speak(response.content.playByPlay)
+        }
+        
         return response.content
     }
     
@@ -108,6 +121,11 @@ public final class AICommentator {
         let prompt = "Provide an exciting opening commentary for a new tic-tac-toe game that's about to begin. Keep it to 1-2 sentences."
         
         let response = try await session.respond(to: prompt)
+        
+        if voiceEnabled {
+            speak(response.content)
+        }
+        
         return response.content
     }
     
@@ -141,6 +159,11 @@ public final class AICommentator {
         """
         
         let response = try await session.respond(to: prompt)
+        
+        if voiceEnabled {
+            speak(response.content)
+        }
+        
         return response.content
     }
     
@@ -208,6 +231,45 @@ public final class AICommentator {
     public func reset() {
         session = nil
         gameHistory.removeAll()
+        speechSynthesizer.stopSpeaking(at: .immediate)
+    }
+    
+    /// Speaks the given text using AVSpeechSynthesizer
+    /// - Parameter text: The text to speak
+    public func speak(_ text: String) {
+        let utterance = AVSpeechUtterance(string: text)
+        
+        // Configure voice based on commentary style
+        switch style {
+        case .casual:
+            utterance.rate = AVSpeechUtteranceDefaultSpeechRate
+            utterance.pitchMultiplier = 1.0
+            
+        case .enthusiastic:
+            utterance.rate = AVSpeechUtteranceDefaultSpeechRate * 1.1
+            utterance.pitchMultiplier = 1.2
+            utterance.volume = 1.0
+            
+        case .analytical:
+            utterance.rate = AVSpeechUtteranceDefaultSpeechRate * 0.9
+            utterance.pitchMultiplier = 0.95
+            
+        case .humorous:
+            utterance.rate = AVSpeechUtteranceDefaultSpeechRate * 1.05
+            utterance.pitchMultiplier = 1.1
+        }
+        
+        // Use a high-quality voice if available
+        if let voice = AVSpeechSynthesisVoice(language: "en-US") {
+            utterance.voice = voice
+        }
+        
+        speechSynthesizer.speak(utterance)
+    }
+    
+    /// Stops any currently speaking commentary
+    public func stopSpeaking() {
+        speechSynthesizer.stopSpeaking(at: .immediate)
     }
     
     // MARK: - Private Methods
@@ -320,7 +382,7 @@ import SwiftUI
 
 /// View that displays live game commentary
 public struct CommentaryView: View {
-    @State private var commentator = AICommentator(style: .enthusiastic)
+    @StateObject private var commentator = AICommentator(style: .enthusiastic)
     @State private var currentCommentary: AICommentator.Commentary?
     @State private var streamedCommentary: String = ""
     @State private var isStreaming = false
@@ -342,6 +404,20 @@ public struct CommentaryView: View {
                     .foregroundStyle(.orange)
                 Text("Live Commentary")
                     .font(.headline)
+                
+                Spacer()
+                
+                // Voice toggle
+                Button(action: {
+                    commentator.voiceEnabled.toggle()
+                    if !commentator.voiceEnabled {
+                        commentator.stopSpeaking()
+                    }
+                }) {
+                    Image(systemName: commentator.voiceEnabled ? "speaker.wave.3.fill" : "speaker.slash.fill")
+                        .foregroundStyle(commentator.voiceEnabled ? .blue : .gray)
+                }
+                .buttonStyle(.plain)
             }
             
             if commentator.isAvailable {
@@ -443,6 +519,34 @@ public struct CommentaryStylePicker: View {
             Text("Humorous").tag(AICommentator.CommentaryStyle.humorous)
         }
         .pickerStyle(.segmented)
+    }
+}
+
+/// Example showing full commentary controls
+public struct CommentaryControlPanel: View {
+    @Binding var commentator: AICommentator
+    @Binding var style: AICommentator.CommentaryStyle
+    
+    public var body: some View {
+        GroupBox("Commentary Settings") {
+            VStack(spacing: 12) {
+                CommentaryStylePicker(style: $style)
+                
+                HStack {
+                    Toggle("Voice Commentary", isOn: Binding(
+                        get: { commentator.voiceEnabled },
+                        set: { commentator.voiceEnabled = $0 }
+                    ))
+                    
+                    if commentator.voiceEnabled {
+                        Button("Stop Speaking") {
+                            commentator.stopSpeaking()
+                        }
+                        .buttonStyle(.bordered)
+                    }
+                }
+            }
+        }
     }
 }
 #endif
