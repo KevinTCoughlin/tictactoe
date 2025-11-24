@@ -331,7 +331,7 @@ public final class AICommentator: ObservableObject {
         player: Player
     ) -> String {
         """
-        \(player.symbol) just played at position \(moveIndex).
+        \(player.symbol) just played at \(describePosition(moveIndex)).
         
         Current board:
         \(describeBoardState(board))
@@ -342,6 +342,35 @@ public final class AICommentator: ObservableObject {
         
         Provide commentary for this move.
         """
+    }
+    
+    /// Provides a human-friendly description of a board position
+    private func describePosition(_ index: Int) -> String {
+        let row = index / 3
+        let col = index % 3
+        
+        let rowDescription: String
+        switch row {
+        case 0: rowDescription = "top"
+        case 1: rowDescription = "middle"
+        case 2: rowDescription = "bottom"
+        default: rowDescription = "unknown"
+        }
+        
+        let colDescription: String
+        switch col {
+        case 0: colDescription = "left"
+        case 1: colDescription = "center"
+        case 2: colDescription = "right"
+        default: colDescription = "unknown"
+        }
+        
+        // Special case for center
+        if row == 1 && col == 1 {
+            return "the center (position 4)"
+        }
+        
+        return "the \(rowDescription) \(colDescription) (position \(index))"
     }
     
     private func describeBoardState(_ board: GameBoard) -> String {

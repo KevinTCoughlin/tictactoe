@@ -53,9 +53,13 @@ struct GridLayout {
         let row = cellIndex / dimension
         let column = cellIndex % dimension
         
+        // Invert row for SpriteKit's bottom-up coordinate system
+        // Row 0 should be at the top, row 2 at the bottom
+        let invertedRow = (dimension - 1) - row
+        
         return CGPoint(
             x: gridOrigin.x + CGFloat(column) * cellSize.width + cellSize.width / 2,
-            y: gridOrigin.y + CGFloat(row) * cellSize.height + cellSize.height / 2
+            y: gridOrigin.y + CGFloat(invertedRow) * cellSize.height + cellSize.height / 2
         )
     }
     
@@ -67,7 +71,11 @@ struct GridLayout {
         guard isPointInGrid(point) else { return nil }
         
         let column = Int((point.x - gridOrigin.x) / cellSize.width)
-        let row = Int((point.y - gridOrigin.y) / cellSize.height)
+        let invertedRow = Int((point.y - gridOrigin.y) / cellSize.height)
+        
+        // Invert row back to logical coordinates
+        // (SpriteKit Y increases upward, but our row 0 is conceptually at the top)
+        let row = (dimension - 1) - invertedRow
         let index = row * dimension + column
         
         let maxIndex = dimension * dimension
