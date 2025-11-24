@@ -24,7 +24,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             GameKitManager.shared.authenticatePlayer()
         }
         
+        // Initialize puzzle system
+        Task { @MainActor in
+            await initializePuzzleSystem()
+        }
+        
         return true
+    }
+    
+    /// Initializes the puzzle notification system
+    @MainActor
+    private func initializePuzzleSystem() async {
+        // Register notification actions
+        PuzzleNotificationManager.shared.registerNotificationActions()
+        
+        // Request notification permissions
+        let granted = await PuzzleNotificationManager.shared.requestAuthorization()
+        
+        if granted {
+            // Schedule daily puzzle notifications
+            PuzzleNotificationManager.shared.scheduleDailyPuzzleNotifications()
+        }
+        
+        print("✅ Puzzle system initialized")
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

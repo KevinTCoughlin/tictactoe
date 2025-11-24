@@ -7,6 +7,10 @@
 
 import Foundation
 
+#if os(iOS) || os(tvOS)
+import UIKit
+#endif
+
 // MARK: - PuzzleType
 
 /// Represents the type of puzzle challenge.
@@ -470,7 +474,7 @@ public struct PuzzleAttempt: Codable {
     public init(
         puzzleId: String,
         userDifficulty: PuzzleDifficulty,
-        deviceInfo: String = UIDevice.current.model
+        deviceInfo: String = Self.currentDeviceInfo()
     ) {
         self.id = UUID().uuidString
         self.puzzleId = puzzleId
@@ -480,6 +484,17 @@ public struct PuzzleAttempt: Codable {
         self.solved = false
         self.userDifficulty = userDifficulty
         self.deviceInfo = deviceInfo
+    }
+    
+    /// Gets the current device information in a cross-platform way
+    private static func currentDeviceInfo() -> String {
+        #if os(iOS) || os(tvOS)
+        return UIDevice.current.model
+        #elseif os(OSX)
+        return "macOS"
+        #else
+        return "Unknown"
+        #endif
     }
     
     /// Records a move made by the user
