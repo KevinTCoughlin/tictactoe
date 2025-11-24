@@ -364,13 +364,11 @@ public struct UserPuzzleProfile: Codable {
             // Update type preferences
             typePreferences[puzzle.type, default: 0] += 1
             
-            // Update average solve time for difficulty
+            // Update average solve time for difficulty efficiently
             let currentAvg = averageSolveTimes[puzzle.difficulty, default: 0]
-            let solvedCount = puzzleStats.values.filter { 
-                $0.isSolved 
-            }.count
+            let currentCount = puzzleStats.values.filter { $0.isSolved }.count
             averageSolveTimes[puzzle.difficulty] = 
-                (currentAvg * Double(max(solvedCount - 1, 0)) + timeInSeconds) / Double(solvedCount)
+                (currentAvg * Double(max(currentCount, 0)) + timeInSeconds) / Double(currentCount + 1)
             
             // Update streak
             updateStreak()

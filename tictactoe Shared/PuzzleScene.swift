@@ -426,10 +426,9 @@ final class PuzzleScene: SKScene {
             showFeedback("Perfect! ✨", color: Configuration.successColor)
             SoundManager.shared.playWin()
             
-            // Show next button
-            UIView.animate(withDuration: Configuration.animationDuration) {
-                self.nextPuzzleButton.alpha = 1
-            }
+            // Show next button with SpriteKit animation
+            nextPuzzleButton.alpha = 0
+            nextPuzzleButton.run(SKAction.fadeIn(withDuration: Configuration.animationDuration))
         } else {
             showFeedback("Not Quite!", color: Configuration.failureColor)
             SoundManager.shared.playDraw()

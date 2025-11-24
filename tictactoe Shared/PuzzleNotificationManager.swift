@@ -7,6 +7,7 @@
 
 import Foundation
 import UserNotifications
+import OSLog
 
 #if os(iOS)
 import UIKit
@@ -27,6 +28,9 @@ final class PuzzleNotificationManager: NSObject {
     static let shared = PuzzleNotificationManager()
     
     // MARK: - Properties
+    
+    /// Logger for notification events
+    private let logger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "tictactoe", category: "PuzzleNotifications")
     
     /// Notification center
     private let notificationCenter = UNUserNotificationCenter.current()
@@ -59,15 +63,15 @@ final class PuzzleNotificationManager: NSObject {
             isAuthorized = granted
             
             if granted {
-                print("✅ Puzzle notifications authorized")
+                logger.info("Puzzle notifications authorized")
                 scheduleDailyPuzzleNotifications()
             } else {
-                print("⚠️ Puzzle notifications not authorized")
+                logger.warning("Puzzle notifications not authorized")
             }
             
             return granted
         } catch {
-            print("❌ Notification authorization error: \(error)")
+            logger.error("Notification authorization error: \(error.localizedDescription)")
             return false
         }
     }
@@ -119,11 +123,11 @@ final class PuzzleNotificationManager: NSObject {
         )
         
         // Schedule notification
-        notificationCenter.add(request) { error in
+        notificationCenter.add(request) { [weak self] error in
             if let error = error {
-                print("❌ Failed to schedule daily puzzle notification: \(error)")
+                self?.logger.error("Failed to schedule daily puzzle notification: \(error.localizedDescription)")
             } else {
-                print("✅ Daily puzzle notification scheduled for \(hour):00")
+                self?.logger.info("Daily puzzle notification scheduled for \(hour):00")
             }
         }
     }
@@ -157,11 +161,11 @@ final class PuzzleNotificationManager: NSObject {
             trigger: trigger
         )
         
-        notificationCenter.add(request) { error in
+        notificationCenter.add(request) { [weak self] error in
             if let error = error {
-                print("❌ Failed to schedule streak reminder: \(error)")
+                self?.logger.error("Failed to schedule streak reminder: \(error.localizedDescription)")
             } else {
-                print("✅ Streak reminder scheduled")
+                self?.logger.info("Streak reminder scheduled")
             }
         }
     }
@@ -201,11 +205,11 @@ final class PuzzleNotificationManager: NSObject {
             trigger: trigger
         )
         
-        notificationCenter.add(request) { error in
+        notificationCenter.add(request) { [weak self] error in
             if let error = error {
-                print("❌ Failed to schedule re-engagement notification: \(error)")
+                self?.logger.error("Failed to schedule re-engagement notification: \(error.localizedDescription)")
             } else {
-                print("✅ Re-engagement notification scheduled for \(daysInactive) days")
+                self?.logger.info("Re-engagement notification scheduled for \(daysInactive) days")
             }
         }
     }
@@ -219,7 +223,7 @@ final class PuzzleNotificationManager: NSObject {
             NotificationID.streakReminder,
             NotificationID.reengagement
         ])
-        print("🔕 All puzzle notifications cancelled")
+        logger.info("All puzzle notifications cancelled")
     }
     
     /// Updates notification schedule when user completes daily puzzle.
@@ -301,9 +305,9 @@ final class PuzzleNotificationManager: NSObject {
     func printPendingNotifications() {
         Task {
             let requests = await notificationCenter.pendingNotificationRequests()
-            print("📋 Pending Puzzle Notifications:")
+            logger.debug("Pending Puzzle Notifications:")
             for request in requests {
-                print("  - \(request.identifier): \(request.content.title)")
+                logger.debug("  - \(request.identifier): \(request.content.title)")
             }
         }
     }
@@ -333,13 +337,13 @@ extension PuzzleNotificationManager: UNUserNotificationCenterDelegate {
             let identifier = response.notification.request.identifier
             let actionIdentifier = response.actionIdentifier
             
-            print("📬 Notification action: \(actionIdentifier) for \(identifier)")
+            logger.info("Notification action: \(actionIdentifier) for \(identifier)")
             
             // Handle actions
             switch actionIdentifier {
             case "SOLVE_NOW":
                 // TODO: Navigate to puzzle scene
-                print("User wants to solve puzzle now")
+                logger.info("User wants to solve puzzle now")
                 
             case "REMIND_LATER":
                 // Reschedule notification for later
@@ -347,7 +351,7 @@ extension PuzzleNotificationManager: UNUserNotificationCenterDelegate {
                 
             case UNNotificationDefaultActionIdentifier:
                 // User tapped the notification
-                print("User tapped notification")
+                logger.info("User tapped notification")
                 
             default:
                 break

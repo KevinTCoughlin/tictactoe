@@ -6,11 +6,14 @@
 //
 
 import UIKit
+import OSLog
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    
+    private let logger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "tictactoe", category: "AppDelegate")
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
@@ -46,7 +49,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             PuzzleNotificationManager.shared.scheduleDailyPuzzleNotifications()
         }
         
-        print("✅ Puzzle system initialized")
+        logger.info("Puzzle system initialized")
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
