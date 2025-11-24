@@ -40,7 +40,7 @@ final class AIGameManager {
     private(set) var humanPlayer: HumanPlayer = .x
     
     /// The AI opponent instance
-    private let aiOpponent: AIOpponent
+    private var aiOpponent: AIOpponent
     
     /// Logger for debugging
     private let logger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "tictactoe", category: "AIGameManager")
@@ -77,10 +77,9 @@ final class AIGameManager {
         logger.info("Human player set to: \(String(describing: player))")
     }
     
-    /// Changes AI difficulty
+    /// Changes AI difficulty by creating a new opponent instance
     func setDifficulty(_ difficulty: AIOpponent.Difficulty) {
-        // Create new opponent with new difficulty
-        // (In production, you might want to make difficulty a property of AIOpponent instead)
+        aiOpponent = AIOpponent(difficulty: difficulty)
         logger.info("AI difficulty changed to: \(String(describing: difficulty))")
     }
     
