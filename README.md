@@ -1,5 +1,11 @@
 # 🎮 Tic-Tac-Toe iOS Game
 
+[![Platform](https://img.shields.io/badge/platform-iOS-lightgrey.svg)](https://www.apple.com/ios/)
+[![Swift](https://img.shields.io/badge/Swift-6.0+-orange.svg)](https://swift.org)
+[![Xcode](https://img.shields.io/badge/Xcode-15.0+-blue.svg)](https://developer.apple.com/xcode/)
+[![iOS](https://img.shields.io/badge/iOS-17.0+-green.svg)](https://www.apple.com/ios/)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
 A modern Tic-Tac-Toe game built with Swift and SpriteKit for iOS, featuring smooth animations, Game Center integration, and a clean architecture.
 
 ## 🚨 Important: macOS/Xcode Required
