@@ -301,6 +301,9 @@ public struct UserPuzzleProfile: Codable {
     /// Average solve times by difficulty
     public var averageSolveTimes: [PuzzleDifficulty: Double]
     
+    /// Count of solved puzzles by difficulty (for efficient average calculations)
+    private var solvedCountsByDifficulty: [PuzzleDifficulty: Int]
+    
     /// User preferences for notification timing
     public var preferredNotificationHour: Int
     
@@ -317,6 +320,7 @@ public struct UserPuzzleProfile: Codable {
         self.puzzleStats = [:]
         self.typePreferences = [:]
         self.averageSolveTimes = [:]
+        self.solvedCountsByDifficulty = [:]
         self.preferredNotificationHour = 9 // 9 AM default
     }
     
@@ -364,11 +368,14 @@ public struct UserPuzzleProfile: Codable {
             // Update type preferences
             typePreferences[puzzle.type, default: 0] += 1
             
-            // Update average solve time for difficulty efficiently
+            // Update average solve time for difficulty efficiently using maintained counter
             let currentAvg = averageSolveTimes[puzzle.difficulty, default: 0]
-            let currentCount = puzzleStats.values.filter { $0.isSolved }.count
+            let currentCount = solvedCountsByDifficulty[puzzle.difficulty, default: 0]
             averageSolveTimes[puzzle.difficulty] = 
-                (currentAvg * Double(max(currentCount, 0)) + timeInSeconds) / Double(currentCount + 1)
+                (currentAvg * Double(currentCount) + timeInSeconds) / Double(currentCount + 1)
+            
+            // Increment solved count for this difficulty
+            solvedCountsByDifficulty[puzzle.difficulty, default: 0] += 1
             
             // Update streak
             updateStreak()

@@ -190,6 +190,13 @@ final class PuzzleManager: ObservableObject {
         )
     }
     
+    /// Updates notification preferences.
+    func updateNotificationPreferences(hour: Int) {
+        guard (0...23).contains(hour) else { return }
+        userProfile.preferredNotificationHour = hour
+        saveUserProfile()
+    }
+    
     // MARK: - Testing & Debug
     
     /// Resets all puzzle progress (for testing).

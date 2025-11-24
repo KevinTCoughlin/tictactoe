@@ -241,12 +241,13 @@ final class PuzzleNotificationManager: NSObject {
     func updateNotificationTime(hour: Int) {
         guard (0...23).contains(hour) else { return }
         
-        // Update profile
-        var profile = PuzzleManager.shared.userProfile
-        profile.preferredNotificationHour = hour
-        
-        // Reschedule notifications
-        scheduleDailyPuzzleNotifications()
+        // Update profile through manager
+        Task { @MainActor in
+            PuzzleManager.shared.updateNotificationPreferences(hour: hour)
+            
+            // Reschedule notifications
+            scheduleDailyPuzzleNotifications()
+        }
     }
     
     // MARK: - Notification Actions
