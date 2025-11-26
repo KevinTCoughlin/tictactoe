@@ -11,14 +11,8 @@
 		0B1653562EC170AD0010E409 /* SoundSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B1653552EC170AD0010E409 /* SoundSettingsView.swift */; };
 		0B16535A2EC170EB0010E409 /* generate_sounds.sh in Resources */ = {isa = PBXBuildFile; fileRef = 0B1653592EC170EB0010E409 /* generate_sounds.sh */; };
 		0B16535E2EC171210010E409 /* SoundQuickReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B16535D2EC171210010E409 /* SoundQuickReference.swift */; };
-		0B805B092ED38BFB00A51D43 /* AIGameCoach.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B805B082ED38BFB00A51D43 /* AIGameCoach.swift */; };
-		0B805B0B2ED38C2900A51D43 /* AIOpponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B805B0A2ED38C2900A51D43 /* AIOpponent.swift */; };
-		0B805B0D2ED38C5800A51D43 /* AICommentator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B805B0C2ED38C5800A51D43 /* AICommentator.swift */; };
-		0B805B0F2ED38C8A00A51D43 /* NaturalLanguageGameInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B805B0E2ED38C8A00A51D43 /* NaturalLanguageGameInterface.swift */; };
 		0B805B112ED38CCD00A51D43 /* AI_FEATURES_README.md in Resources */ = {isa = PBXBuildFile; fileRef = 0B805B102ED38CCD00A51D43 /* AI_FEATURES_README.md */; };
-		0B805B132ED38D3400A51D43 /* AIGameManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B805B122ED38D3400A51D43 /* AIGameManager.swift */; };
 		0B805B152ED38DA500A51D43 /* AI_OPPONENT_INTEGRATION.md in Resources */ = {isa = PBXBuildFile; fileRef = 0B805B142ED38DA500A51D43 /* AI_OPPONENT_INTEGRATION.md */; };
-		0B805B172ED38DC200A51D43 /* AICommentaryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B805B162ED38DC200A51D43 /* AICommentaryManager.swift */; };
 		0B805B192ED38E5400A51D43 /* AI_COMMENTARY_INTEGRATION.md in Resources */ = {isa = PBXBuildFile; fileRef = 0B805B182ED38E5400A51D43 /* AI_COMMENTARY_INTEGRATION.md */; };
 		0B805B1B2ED38EA200A51D43 /* COMPLETE_INTEGRATION_SUMMARY.md in Resources */ = {isa = PBXBuildFile; fileRef = 0B805B1A2ED38EA200A51D43 /* COMPLETE_INTEGRATION_SUMMARY.md */; };
 		0B805B1D2ED38EC100A51D43 /* QUICK_REFERENCE.md in Resources */ = {isa = PBXBuildFile; fileRef = 0B805B1C2ED38EC100A51D43 /* QUICK_REFERENCE.md */; };
@@ -45,14 +39,8 @@
 		0B1653552EC170AD0010E409 /* SoundSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundSettingsView.swift; sourceTree = "<group>"; };
 		0B1653592EC170EB0010E409 /* generate_sounds.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = generate_sounds.sh; sourceTree = "<group>"; };
 		0B16535D2EC171210010E409 /* SoundQuickReference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundQuickReference.swift; sourceTree = "<group>"; };
-		0B805B082ED38BFB00A51D43 /* AIGameCoach.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIGameCoach.swift; sourceTree = "<group>"; };
-		0B805B0A2ED38C2900A51D43 /* AIOpponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIOpponent.swift; sourceTree = "<group>"; };
-		0B805B0C2ED38C5800A51D43 /* AICommentator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AICommentator.swift; sourceTree = "<group>"; };
-		0B805B0E2ED38C8A00A51D43 /* NaturalLanguageGameInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaturalLanguageGameInterface.swift; sourceTree = "<group>"; };
 		0B805B102ED38CCD00A51D43 /* AI_FEATURES_README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = AI_FEATURES_README.md; sourceTree = "<group>"; };
-		0B805B122ED38D3400A51D43 /* AIGameManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIGameManager.swift; sourceTree = "<group>"; };
 		0B805B142ED38DA500A51D43 /* AI_OPPONENT_INTEGRATION.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = AI_OPPONENT_INTEGRATION.md; sourceTree = "<group>"; };
-		0B805B162ED38DC200A51D43 /* AICommentaryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AICommentaryManager.swift; sourceTree = "<group>"; };
 		0B805B182ED38E5400A51D43 /* AI_COMMENTARY_INTEGRATION.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = AI_COMMENTARY_INTEGRATION.md; sourceTree = "<group>"; };
 		0B805B1A2ED38EA200A51D43 /* COMPLETE_INTEGRATION_SUMMARY.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = COMPLETE_INTEGRATION_SUMMARY.md; sourceTree = "<group>"; };
 		0B805B1C2ED38EC100A51D43 /* QUICK_REFERENCE.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = QUICK_REFERENCE.md; sourceTree = "<group>"; };
@@ -146,14 +134,8 @@
 				0BFEDBFA2ECA72AC008154E4 /* MarkRenderer.swift */,
 				0BFEDBFC2ECA72C7008154E4 /* WinningLineAnimator.swift */,
 				0BFEDBFE2ECA72E2008154E4 /* GameBoardTests.swift */,
-				0B805B082ED38BFB00A51D43 /* AIGameCoach.swift */,
-				0B805B0A2ED38C2900A51D43 /* AIOpponent.swift */,
-				0B805B0C2ED38C5800A51D43 /* AICommentator.swift */,
-				0B805B0E2ED38C8A00A51D43 /* NaturalLanguageGameInterface.swift */,
 				0B805B102ED38CCD00A51D43 /* AI_FEATURES_README.md */,
-				0B805B122ED38D3400A51D43 /* AIGameManager.swift */,
 				0B805B142ED38DA500A51D43 /* AI_OPPONENT_INTEGRATION.md */,
-				0B805B162ED38DC200A51D43 /* AICommentaryManager.swift */,
 				0B805B182ED38E5400A51D43 /* AI_COMMENTARY_INTEGRATION.md */,
 				0B805B1A2ED38EA200A51D43 /* COMPLETE_INTEGRATION_SUMMARY.md */,
 				0B805B1C2ED38EC100A51D43 /* QUICK_REFERENCE.md */,
@@ -284,19 +266,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0B805B092ED38BFB00A51D43 /* AIGameCoach.swift in Sources */,
 				0BFEDBFB2ECA72AC008154E4 /* MarkRenderer.swift in Sources */,
-				0B805B0F2ED38C8A00A51D43 /* NaturalLanguageGameInterface.swift in Sources */,
-				0B805B0B2ED38C2900A51D43 /* AIOpponent.swift in Sources */,
 				0BFEDBFD2ECA72C7008154E4 /* WinningLineAnimator.swift in Sources */,
 				0B16535E2EC171210010E409 /* SoundQuickReference.swift in Sources */,
-				0B805B0D2ED38C5800A51D43 /* AICommentator.swift in Sources */,
 				0BFEDBF72ECA728D008154E4 /* GridLayout.swift in Sources */,
 				0BFEDBF92ECA729C008154E4 /* GridRenderer.swift in Sources */,
 				0BFEDBF52ECA727F008154E4 /* GameBoard.swift in Sources */,
-				0B805B172ED38DC200A51D43 /* AICommentaryManager.swift in Sources */,
 				0B1653542EC170840010E409 /* SoundManager.swift in Sources */,
-				0B805B132ED38D3400A51D43 /* AIGameManager.swift in Sources */,
 				0B1653562EC170AD0010E409 /* SoundSettingsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
