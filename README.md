@@ -118,7 +118,7 @@ xcodebuild test \
 - **Framework**: SpriteKit
 - **Platform**: iOS 17.0+
 - **Services**: Game Center
-- **Architecture**: Scene-based with MVVM patterns
+- **Architecture**: Scene-based SpriteKit (GameScene + game board/model + renderer/animator components)
 
 ## 📱 Minimum iOS Version
 
