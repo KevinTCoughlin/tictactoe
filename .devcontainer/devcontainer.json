@@ -1,5 +1,7 @@
 {
-  "name": "Tic-Tac-Toe iOS Development",
+  "_comment": "⚠️ WARNING: This devcontainer runs on Linux and CANNOT build iOS apps. iOS development requires macOS and Xcode. Use this container only for: code editing/review, documentation updates, and CI/CD modifications. See .devcontainer/README.md and root README.md for full details.",
+  
+  "name": "Tic-Tac-Toe iOS Development (Code Review Only)",
   "image": "mcr.microsoft.com/devcontainers/swift:latest",
   
   "features": {
@@ -74,7 +76,7 @@
   
   "forwardPorts": [],
   
-  "postCreateCommand": "swift --version && echo 'Development container ready!'",
+  "postCreateCommand": "bash .devcontainer/show-warning.sh",
   
   "remoteUser": "vscode",
   
