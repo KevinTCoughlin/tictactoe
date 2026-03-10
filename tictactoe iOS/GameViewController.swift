@@ -45,6 +45,25 @@ final class GameViewController: UIViewController {
         return button
     }()
     
+    /// Button to access puzzle mode.
+    private lazy var puzzleButton: UIButton = {
+        var config = UIButton.Configuration.filled()
+        config.cornerStyle = .capsule
+        config.baseBackgroundColor = .systemBlue.withAlphaComponent(0.9)
+        config.baseForegroundColor = .white
+        config.image = UIImage(systemName: "puzzlepiece.fill")
+        config.preferredSymbolConfigurationForImage = UIImage.SymbolConfiguration(pointSize: 20, weight: .semibold)
+        config.contentInsets = NSDirectionalEdgeInsets(top: 12, leading: 12, bottom: 12, trailing: 12)
+        
+        let button = UIButton(configuration: config, primaryAction: UIAction { [weak self] _ in
+            self?.handlePuzzleButtonTap()
+        })
+        
+        button.translatesAutoresizingMaskIntoConstraints = false
+        
+        return button
+    }()
+    
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
@@ -52,6 +71,7 @@ final class GameViewController: UIViewController {
         configureGameView()
         configureGameCenter()
         setupGameCenterButton()
+        setupPuzzleButton()
         observeGameCenterStatus()
     }
     
@@ -88,6 +108,16 @@ final class GameViewController: UIViewController {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
             self?.updateGameCenterButton()
         }
+    }
+    
+    /// Sets up the Puzzle button in the view hierarchy.
+    private func setupPuzzleButton() {
+        view.addSubview(puzzleButton)
+        
+        NSLayoutConstraint.activate([
+            puzzleButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
+            puzzleButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+        ])
     }
     
     /// Observes Game Center authentication status changes.
@@ -138,6 +168,16 @@ final class GameViewController: UIViewController {
             logger.info("User tapped to sign in to Game Center")
             GameKitManager.shared.presentGameCenterLogin()
         }
+    }
+    
+    /// Handles Puzzle button tap.
+    private func handlePuzzleButtonTap() {
+        logger.info("Puzzle button tapped")
+        
+        // Create and present puzzle view controller
+        let puzzleVC = PuzzleViewController()
+        puzzleVC.modalPresentationStyle = .fullScreen
+        present(puzzleVC, animated: true)
     }
     
     /// Configures the SpriteKit view and presents the game scene.
