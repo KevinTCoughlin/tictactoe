@@ -1,8 +1,22 @@
 # Development Container for Tic-Tac-Toe iOS
 
+## ⚠️ IMPORTANT LIMITATION
+
+**This devcontainer runs on Linux and CANNOT build or run the iOS application.**
+
+This is an iOS project that **requires macOS and Xcode** for building and testing. The devcontainer is provided for:
+- ✅ Code review and editing
+- ✅ Documentation updates
+- ✅ CI/CD workflow modifications
+- ✅ Swift syntax learning
+
+**For actual iOS development, you must use macOS with Xcode.**
+
+---
+
 This directory contains the configuration for a development container that can be used with:
-- **GitHub Codespaces** - Cloud-based development environment
-- **VS Code Dev Containers** - Local containerized development
+- **GitHub Codespaces** - Cloud-based development environment (Linux-based, no iOS build support)
+- **VS Code Dev Containers** - Local containerized development (no iOS build support)
 
 ## What's Included
 
@@ -82,7 +96,7 @@ To build and run the iOS application:
      -scheme "tictactoe iOS" \
      -configuration Debug \
      -sdk iphonesimulator \
-     -destination 'platform=iOS Simulator,name=iPhone 15'
+     -destination 'platform=iOS Simulator,name=iPhone 16 Pro'
    ```
 
 ## Customization

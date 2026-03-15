@@ -1,0 +1,22 @@
+#!/bin/bash
+
+echo ""
+echo "⚠️  WARNING: iOS Build Not Supported ⚠️"
+echo ""
+echo "This is an iOS project that requires macOS and Xcode."
+echo ""
+echo "✅ You CAN:"
+echo "  - Edit Swift code and view files"
+echo "  - Review pull requests"
+echo "  - Update documentation"
+echo "  - Modify CI/CD workflows"
+echo ""
+echo "❌ You CANNOT:"
+echo "  - Build the iOS application"
+echo "  - Run the app in iOS Simulator"
+echo "  - Test iOS-specific features"
+echo ""
+echo "For full development, use macOS with Xcode."
+echo "See README.md for more details."
+echo ""
+swift --version

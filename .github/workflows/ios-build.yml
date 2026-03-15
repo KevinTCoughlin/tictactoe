@@ -18,11 +18,11 @@ permissions:
 jobs:
   build:
     name: Build and Test iOS App
-    runs-on: macos-latest
+    runs-on: [self-hosted, macOS, CascadiaCollections]
     
     steps:
     - name: Checkout Repository
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
       
     - name: Show Xcode Version
       run: |
@@ -42,7 +42,7 @@ jobs:
           -scheme "${{ env.SCHEME }}" \
           -configuration ${{ env.CONFIGURATION }} \
           -sdk iphonesimulator \
-          -destination 'platform=iOS Simulator,name=iPhone 15,OS=latest' \
+          -destination 'platform=iOS Simulator,name=iPhone 16 Pro,OS=latest' \
           CODE_SIGN_IDENTITY="" \
           CODE_SIGNING_REQUIRED=NO \
           CODE_SIGNING_ALLOWED=NO \
@@ -54,7 +54,7 @@ jobs:
           -project "${{ env.PROJECT }}" \
           -scheme "${{ env.SCHEME }}" \
           -sdk iphonesimulator \
-          -destination 'platform=iOS Simulator,name=iPhone 15,OS=latest' \
+          -destination 'platform=iOS Simulator,name=iPhone 16 Pro,OS=latest' \
           CODE_SIGN_IDENTITY="" \
           CODE_SIGNING_REQUIRED=NO \
           CODE_SIGNING_ALLOWED=NO \
@@ -62,7 +62,7 @@ jobs:
           
     - name: Archive Build Artifacts
       if: success()
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: ios-build
         path: |

@@ -13,11 +13,11 @@ permissions:
 jobs:
   swiftlint:
     name: SwiftLint
-    runs-on: macos-latest
+    runs-on: [self-hosted, macOS, CascadiaCollections]
     
     steps:
     - name: Checkout Repository
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
       
     - name: Install SwiftLint
       run: brew install swiftlint
@@ -46,11 +46,11 @@ jobs:
         
   swift-format:
     name: Swift Format Check
-    runs-on: macos-latest
+    runs-on: [self-hosted, macOS, CascadiaCollections]
     
     steps:
     - name: Checkout Repository
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
       
     - name: Check Swift Files Exist
       run: |
