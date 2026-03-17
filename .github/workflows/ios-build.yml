@@ -18,12 +18,15 @@ permissions:
 jobs:
   build:
     name: Build and Test iOS App
-    runs-on: [self-hosted, macOS, CascadiaCollections]
-    
+    runs-on: macos-latest
+
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v6
-      
+
+    - name: Install xcpretty
+      run: gem install xcpretty --no-document
+
     - name: Show Xcode Version
       run: |
         xcodebuild -version

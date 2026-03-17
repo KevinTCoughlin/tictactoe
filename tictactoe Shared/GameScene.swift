@@ -66,10 +66,57 @@ final class GameScene: SKScene {
         return label
     }()
     
+    /// Button to toggle AI mode
+    private lazy var aiModeButton: SKLabelNode = {
+        let label = SKLabelNode(fontNamed: ".AppleSystemUIFontRounded-Semibold")
+        label.fontSize = 16
+        label.fontColor = .systemBlue
+        label.horizontalAlignmentMode = .right
+        label.verticalAlignmentMode = .top
+        label.text = "AI: OFF"
+        label.name = "aiModeButton"
+        return label
+    }()
+    
+    /// Button to toggle commentary
+    private lazy var commentaryButton: SKLabelNode = {
+        let label = SKLabelNode(fontNamed: ".AppleSystemUIFontRounded-Semibold")
+        label.fontSize = 16
+        label.fontColor = .systemBlue
+        label.horizontalAlignmentMode = .right
+        label.verticalAlignmentMode = .top
+        label.text = "🎙️: OFF"
+        label.name = "commentaryButton"
+        return label
+    }()
+    
     // MARK: - State
     
     /// The underlying game board model.
     private var board = GameBoard()
+    
+    /// The AI game manager for handling AI opponent
+    @available(iOS 26.0, macOS 15.2, *)
+    private lazy var aiManager: AIGameManager = {
+        let manager = AIGameManager(difficulty: .medium)
+        manager.onAIMove = { [weak self] cellIndex in
+            self?.handleAIMove(at: cellIndex)
+        }
+        return manager
+    }()
+    
+    /// The AI commentary manager for play-by-play commentary
+    @available(iOS 26.0, macOS 15.2, *)
+    private lazy var commentaryManager: AICommentaryManager = {
+        let manager = AICommentaryManager(style: .enthusiastic)
+        manager.onCommentaryUpdate = { [weak self] commentary in
+            self?.showCommentary(commentary)
+        }
+        return manager
+    }()
+    
+    /// Node for displaying commentary
+    private lazy var commentaryDisplay = CommentaryDisplayNode()
     
     /// The current grid layout based on scene dimensions.
     private var gridLayout: GridLayout {
@@ -96,9 +143,23 @@ final class GameScene: SKScene {
     private func setupScene() {
         configureBackgroundColor()
         addChild(statusLabel)
+        if #available(iOS 26.0, macOS 15.2, *) {
+            addChild(aiModeButton)
+            addChild(commentaryButton)
+            addChild(commentaryDisplay)
+        }
         gridRenderer.render(in: frame)
         updateStatusLabel()
         layoutStatusLabel()
+        if #available(iOS 26.0, macOS 15.2, *) {
+            layoutAIModeButton()
+            layoutCommentaryButton()
+            
+            // Show opening commentary if enabled
+            if commentaryManager.isEnabled {
+                commentaryManager.generateOpeningCommentary()
+            }
+        }
     }
     
     /// Configures the background color based on the platform.
@@ -115,6 +176,10 @@ final class GameScene: SKScene {
         gridRenderer.render(in: frame)
         markRenderer.relayout(using: gridLayout)
         layoutStatusLabel()
+        if #available(iOS 26.0, macOS 15.2, *) {
+            layoutAIModeButton()
+            layoutCommentaryButton()
+        }
     }
     
     // MARK: - Status Label
@@ -133,6 +198,43 @@ final class GameScene: SKScene {
         statusLabel.text = statusText
     }
     
+    /// Positions the AI mode button in the top-right corner
+    @available(iOS 26.0, macOS 15.2, *)
+    private func layoutAIModeButton() {
+        let padding: CGFloat = 20
+        aiModeButton.position = CGPoint(
+            x: frame.maxX - padding,
+            y: frame.maxY - padding
+        )
+    }
+    
+    /// Positions the commentary button below the AI button
+    @available(iOS 26.0, macOS 15.2, *)
+    private func layoutCommentaryButton() {
+        let padding: CGFloat = 20
+        let buttonSpacing: CGFloat = 30
+        commentaryButton.position = CGPoint(
+            x: frame.maxX - padding,
+            y: frame.maxY - padding - buttonSpacing
+        )
+    }
+    
+    /// Updates the AI mode button appearance
+    @available(iOS 26.0, macOS 15.2, *)
+    private func updateAIModeButton() {
+        let isAIMode = aiManager.gameMode == .playerVsAI
+        aiModeButton.text = isAIMode ? "AI: ON" : "AI: OFF"
+        aiModeButton.fontColor = isAIMode ? .systemGreen : .systemBlue
+    }
+    
+    /// Updates the commentary button appearance
+    @available(iOS 26.0, macOS 15.2, *)
+    private func updateCommentaryButton() {
+        let isEnabled = commentaryManager.isEnabled
+        commentaryButton.text = isEnabled ? "🎙️: ON" : "🎙️: OFF"
+        commentaryButton.fontColor = isEnabled ? .systemOrange : .systemBlue
+    }
+    
     /// The text to display in the status label based on game state.
     private var statusText: String {
         if let winner = board.winner {
@@ -140,6 +242,13 @@ final class GameScene: SKScene {
         } else if board.isDraw {
             return "Draw — tap to reset"
         } else {
+            // Include AI status if in AI mode
+            if #available(iOS 26.0, macOS 15.2, *) {
+                let aiStatus = aiManager.statusText(for: board)
+                if !aiStatus.isEmpty {
+                    return aiStatus
+                }
+            }
             return "Turn: \(board.currentPlayer.symbol)"
         }
     }
@@ -160,6 +269,15 @@ final class GameScene: SKScene {
         
         SoundManager.shared.playTurn()
         
+        // Generate commentary for this move
+        if #available(iOS 26.0, macOS 15.2, *) {
+            commentaryManager.commentOnMove(
+                cellIndex,
+                board: board,
+                player: board.lastPlayer
+            )
+        }
+        
         if board.isGameOver {
             handleGameOver()
         }
@@ -177,6 +295,11 @@ final class GameScene: SKScene {
             SoundManager.shared.playWin()
         } else if board.isDraw {
             SoundManager.shared.playDraw()
+        }
+        
+        // Generate closing commentary
+        if #available(iOS 26.0, macOS 15.2, *) {
+            commentaryManager.generateClosingCommentary(for: board)
         }
     }
     
@@ -197,6 +320,22 @@ final class GameScene: SKScene {
     
     /// Handles tap/click input at the specified location.
     private func handleTap(at location: CGPoint) {
+        if #available(iOS 26.0, macOS 15.2, *) {
+            // Check if AI mode button was tapped
+            if let tappedNode = atPoint(location) as? SKLabelNode,
+               tappedNode.name == "aiModeButton" {
+                toggleAIMode()
+                return
+            }
+            
+            // Check if commentary button was tapped
+            if let tappedNode = atPoint(location) as? SKLabelNode,
+               tappedNode.name == "commentaryButton" {
+                toggleCommentary()
+                return
+            }
+        }
+        
         if board.isGameOver {
             resetGame()
         } else {
@@ -204,10 +343,73 @@ final class GameScene: SKScene {
         }
     }
     
+    /// Toggles between Player vs Player and Player vs AI mode
+    @available(iOS 26.0, macOS 15.2, *)
+    private func toggleAIMode() {
+        let newMode: AIGameManager.GameMode = (aiManager.gameMode == .playerVsPlayer) ? .playerVsAI : .playerVsPlayer
+        aiManager.setGameMode(newMode)
+        updateAIModeButton()
+        
+        // Reset the game when toggling modes
+        resetGame()
+    }
+    
+    /// Toggles commentary on/off
+    @available(iOS 26.0, macOS 15.2, *)
+    private func toggleCommentary() {
+        let newState = !commentaryManager.isEnabled
+        commentaryManager.setEnabled(newState)
+        updateCommentaryButton()
+        
+        // Show welcome message when enabling
+        if newState {
+            showCommentary("🎙️ Commentary enabled! Let's make this exciting!")
+        } else {
+            commentaryDisplay.hide()
+        }
+    }
+    
+    /// Shows commentary on screen
+    @available(iOS 26.0, macOS 15.2, *)
+    private func showCommentary(_ text: String) {
+        let layout = gridLayout
+        let yPosition = layout.gridOrigin.y - 60 // Below the grid
+        let position = CGPoint(x: frame.midX, y: yPosition)
+        
+        commentaryDisplay.show(commentary: text, at: position)
+    }
+    
     /// Attempts to make a move at the tapped location.
     private func attemptMove(at location: CGPoint) {
         guard let cellIndex = gridLayout.cellIndex(at: location) else { return }
         guard board.makeMove(at: cellIndex) else { return }
+        
+        placeMark(at: cellIndex)
+        updateStatusLabel()
+        
+        // Check if AI should move next
+        if #available(iOS 26.0, macOS 15.2, *) {
+            checkForAITurn()
+        }
+    }
+    
+    /// Checks if it's AI's turn and requests a move
+    @available(iOS 26.0, macOS 15.2, *)
+    private func checkForAITurn() {
+        guard !board.isGameOver else { return }
+        
+        if aiManager.isAITurn(for: board) {
+            aiManager.requestAIMove(for: board)
+        }
+    }
+    
+    /// Handles when the AI makes a move
+    @available(iOS 26.0, macOS 15.2, *)
+    private func handleAIMove(at cellIndex: Int) {
+        guard board.makeMove(at: cellIndex) else {
+            // AI made an invalid move - this shouldn't happen
+            return
+        }
         
         placeMark(at: cellIndex)
         updateStatusLabel()
@@ -223,6 +425,23 @@ final class GameScene: SKScene {
         gridRenderer.restore()
         updateStatusLabel()
         SoundManager.shared.playReset()
+        
+        if #available(iOS 26.0, macOS 15.2, *) {
+            // Reset AI manager
+            aiManager.reset()
+            
+            // Reset commentary
+            commentaryManager.reset()
+            commentaryDisplay.hide()
+            
+            // Show opening commentary if enabled
+            if commentaryManager.isEnabled {
+                commentaryManager.generateOpeningCommentary()
+            }
+            
+            // If AI plays as X (goes first), trigger AI move
+            checkForAITurn()
+        }
         
         // Increment ad counter and potentially show an ad (only if SDK available)
         #if os(iOS) && canImport(GoogleMobileAds)
