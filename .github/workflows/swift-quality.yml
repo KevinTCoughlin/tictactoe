@@ -13,7 +13,7 @@ permissions:
 jobs:
   swiftlint:
     name: SwiftLint
-    runs-on: [self-hosted, macOS, CascadiaCollections]
+    runs-on: macos-latest
     
     steps:
     - name: Checkout Repository
@@ -46,7 +46,7 @@ jobs:
         
   swift-format:
     name: Swift Format Check
-    runs-on: [self-hosted, macOS, CascadiaCollections]
+    runs-on: macos-latest
     
     steps:
     - name: Checkout Repository
