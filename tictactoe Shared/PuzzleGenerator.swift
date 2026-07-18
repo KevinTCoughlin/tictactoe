@@ -138,11 +138,19 @@ final class PuzzleGenerator {
         
         // If no candidates, broaden the search
         if candidates.isEmpty {
-            candidates = staticPuzzles.filter { $0.difficulty == profile.currentDifficulty }
-        }
-        
-        if candidates.isEmpty {
-            candidates = staticPuzzles
+            if let type = type {
+                candidates = staticPuzzles.filter {
+                    $0.difficulty == profile.currentDifficulty && $0.type == type
+                }
+                if candidates.isEmpty {
+                    candidates = staticPuzzles.filter { $0.type == type }
+                }
+            } else {
+                candidates = staticPuzzles.filter { $0.difficulty == profile.currentDifficulty }
+                if candidates.isEmpty {
+                    candidates = staticPuzzles
+                }
+            }
         }
         
         // Select randomly from candidates

@@ -138,6 +138,9 @@ final class PuzzleScene: SKScene {
     /// Number of hints shown for current puzzle
     private var hintsShown = 0
     
+    /// Strategist used to choose deterministic opponent responses in two-move puzzles.
+    private let puzzleStrategist = PuzzleStrategist()
+    
     /// Callback when puzzle is completed
     var onPuzzleCompleted: ((GamePuzzle, Bool, TimeInterval) -> Void)?
     
@@ -373,17 +376,35 @@ final class PuzzleScene: SKScene {
             completePuzzle(success: true)
             
         case .twoMove:
+            guard isExpectedTwoMoveStep(for: puzzle) else {
+                handleIncorrectMove()
+                return
+            }
+
+            if board.winner == puzzle.currentPlayer {
+                completePuzzle(success: true)
+                return
+            }
+
             // Check if sequence is complete
             let movesMade = currentAttempt?.moveSequence.count ?? 0
             if movesMade >= puzzle.solution.count {
-                // Need to simulate opponent response and check final outcome
                 if validateTwoMoveSolution(board: board, puzzle: puzzle) {
                     completePuzzle(success: true)
                 } else {
                     completePuzzle(success: false)
                 }
             } else {
-                // Continue with sequence
+                guard let boardAfterOpponent = applyOpponentResponse(to: board) else {
+                    completePuzzle(success: false)
+                    return
+                }
+                self.board = boardAfterOpponent
+
+                if boardAfterOpponent.isGameOver {
+                    completePuzzle(success: boardAfterOpponent.winner == puzzle.currentPlayer)
+                    return
+                }
                 updateStatus()
             }
             
@@ -405,9 +426,43 @@ final class PuzzleScene: SKScene {
     }
     
     private func validateTwoMoveSolution(board: GameBoard, puzzle: GamePuzzle) -> Bool {
-        // For two-move puzzles, we need to verify the sequence leads to victory
-        // This is a simplified check - in production, use PuzzleStrategist
+        let recordedMoves = currentAttempt?.moveSequence ?? []
+        guard recordedMoves == puzzle.solution else { return false }
         return board.winner == puzzle.currentPlayer
+    }
+
+    private func isExpectedTwoMoveStep(for puzzle: GamePuzzle) -> Bool {
+        let recordedMoves = currentAttempt?.moveSequence ?? []
+        let expectedPrefix = Array(puzzle.solution.prefix(recordedMoves.count))
+        return recordedMoves == expectedPrefix
+    }
+
+    private func applyOpponentResponse(to board: GameBoard) -> GameBoard? {
+        guard let opponentMove = puzzleStrategist.findBestMove(for: board) else {
+            return board
+        }
+
+        var updatedBoard = board
+        guard updatedBoard.makeMove(at: opponentMove) else { return nil }
+
+        if let opponentCell = newlyOccupiedCell(from: board, to: updatedBoard) {
+            let position = gridLayout.position(for: opponentCell)
+            markRenderer.placeMark(
+                updatedBoard.lastPlayer.symbol,
+                at: opponentCell,
+                position: position,
+                cellSize: gridLayout.cellSize
+            )
+        }
+
+        return updatedBoard
+    }
+
+    private func newlyOccupiedCell(from previous: GameBoard, to current: GameBoard) -> Int? {
+        for index in 0..<9 where !previous.isCellOccupied(at: index) && current.isCellOccupied(at: index) {
+            return index
+        }
+        return nil
     }
     
     // MARK: - Puzzle Completion

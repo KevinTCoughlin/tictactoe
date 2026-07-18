@@ -79,12 +79,35 @@ final class PuzzleSystemTests: XCTestCase {
         )
         
         // Record first successful attempt
-        profile.recordPuzzleAttempt(puzzle: puzzle, solved: true, timeInSeconds: 10.0)
+        profile.recordPuzzleAttempt(
+            puzzle: puzzle,
+            solved: true,
+            timeInSeconds: 10.0,
+            countsTowardStreak: true
+        )
         
         XCTAssertEqual(profile.currentStreak, 1)
         XCTAssertEqual(profile.longestStreak, 1)
         XCTAssertEqual(profile.totalSolved, 1)
         XCTAssertEqual(profile.totalPoints, puzzle.difficulty.points)
+    }
+
+    func testNonDailyCompletionDoesNotAdvanceStreak() {
+        var profile = UserPuzzleProfile()
+
+        let puzzle = GamePuzzle(
+            type: .oneMove,
+            difficulty: .beginner,
+            xMask: 0b110_000_000,
+            oMask: 0b000_110_000,
+            currentPlayer: .x,
+            solution: [2]
+        )
+
+        profile.recordPuzzleAttempt(puzzle: puzzle, solved: true, timeInSeconds: 10.0)
+
+        XCTAssertEqual(profile.currentStreak, 0)
+        XCTAssertNil(profile.lastCompletionDate)
     }
     
     func testUserProfileLevelUp() {
@@ -240,6 +263,14 @@ final class PuzzleSystemTests: XCTestCase {
         // Should generate appropriate difficulty puzzle
         let puzzle = generator.generatePuzzle(for: profile)
         XCTAssertNotNil(puzzle)
+    }
+
+    func testPuzzleGeneratorHonorsRequestedType() {
+        let generator = PuzzleGenerator()
+        let profile = UserPuzzleProfile()
+
+        let puzzle = generator.generatePuzzle(for: profile, type: .defensive)
+        XCTAssertEqual(puzzle.type, .defensive)
     }
     
     func testPuzzleValidation() {

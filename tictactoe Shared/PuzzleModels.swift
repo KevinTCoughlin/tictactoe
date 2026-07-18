@@ -357,7 +357,8 @@ public struct UserPuzzleProfile: Codable {
     public mutating func recordPuzzleAttempt(
         puzzle: GamePuzzle,
         solved: Bool,
-        timeInSeconds: Double
+        timeInSeconds: Double,
+        countsTowardStreak: Bool = false
     ) {
         totalAttempts += 1
         
@@ -377,8 +378,10 @@ public struct UserPuzzleProfile: Codable {
             // Increment solved count for this difficulty
             solvedCountsByDifficulty[puzzle.difficulty, default: 0] += 1
             
-            // Update streak
-            updateStreak()
+            // Only daily puzzle completions should affect streak tracking.
+            if countsTowardStreak {
+                updateStreak()
+            }
         }
         
         // Update puzzle-specific stats
