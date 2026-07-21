@@ -11,15 +11,3 @@ updates:
     commit-message:
       prefix: "ci"
       include: "scope"
-
-  # Enable version updates for Swift Package Manager (if needed in future)
-  - package-ecosystem: "swift"
-    directory: "/"
-    schedule:
-      interval: "weekly"
-    labels:
-      - "dependencies"
-      - "swift"
-    commit-message:
-      prefix: "deps"
-      include: "scope"
