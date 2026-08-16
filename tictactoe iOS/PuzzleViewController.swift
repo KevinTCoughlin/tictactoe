@@ -35,6 +35,7 @@ final class PuzzleViewController: UIViewController {
         })
         
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.accessibilityLabel = "Close puzzles"
         return button
     }()
     
@@ -50,6 +51,7 @@ final class PuzzleViewController: UIViewController {
         })
         
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.accessibilityLabel = "Puzzle statistics"
         return button
     }()
     

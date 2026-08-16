@@ -19,6 +19,8 @@ final class GameViewController: UIViewController {
     // MARK: - Properties
     
     private let logger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "tictactoe", category: "GameViewController")
+
+    private var authenticationObserver: NSObjectProtocol?
     
     /// The SpriteKit view used to display the game scene.
     private var skView: SKView? {
@@ -40,6 +42,8 @@ final class GameViewController: UIViewController {
         })
         
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.accessibilityLabel = "Game Center"
+        button.accessibilityHint = "Opens Game Center or signs you in"
         button.alpha = 0 // Start hidden, will fade in after authentication check
         
         return button
@@ -60,6 +64,8 @@ final class GameViewController: UIViewController {
         })
         
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.accessibilityLabel = "Puzzles"
+        button.accessibilityHint = "Opens puzzle mode"
         
         return button
     }()
@@ -81,6 +87,12 @@ final class GameViewController: UIViewController {
         // Ensure Game Center access point is visible after view appears
         if GKLocalPlayer.local.isAuthenticated {
             GKAccessPoint.shared.isActive = true
+        }
+    }
+
+    deinit {
+        if let authenticationObserver {
+            NotificationCenter.default.removeObserver(authenticationObserver)
         }
     }
     
@@ -123,7 +135,7 @@ final class GameViewController: UIViewController {
     /// Observes Game Center authentication status changes.
     private func observeGameCenterStatus() {
         // Observe authentication state changes
-        NotificationCenter.default.addObserver(
+        authenticationObserver = NotificationCenter.default.addObserver(
             forName: .GKPlayerAuthenticationDidChangeNotificationName,
             object: nil,
             queue: .main
@@ -272,4 +284,3 @@ final class GameViewController: UIViewController {
         true
     }
 }
-

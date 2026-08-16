@@ -1,9 +1,9 @@
 # 🎮 Tic-Tac-Toe iOS Game
 
 [![Platform](https://img.shields.io/badge/platform-iOS-lightgrey.svg)](https://www.apple.com/ios/)
-[![Swift](https://img.shields.io/badge/Swift-6.0+-orange.svg)](https://swift.org)
-[![Xcode](https://img.shields.io/badge/Xcode-15.0+-blue.svg)](https://developer.apple.com/xcode/)
-[![iOS](https://img.shields.io/badge/iOS-17.0+-green.svg)](https://www.apple.com/ios/)
+[![Swift](https://img.shields.io/badge/Swift-5-orange.svg)](https://swift.org)
+[![Xcode](https://img.shields.io/badge/Xcode-26.0+-blue.svg)](https://developer.apple.com/xcode/)
+[![iOS](https://img.shields.io/badge/iOS-26.0+-green.svg)](https://www.apple.com/ios/)
 
 A modern Tic-Tac-Toe game built with Swift and SpriteKit for iOS, featuring smooth animations, Game Center integration, and a clean architecture.
 
@@ -11,7 +11,7 @@ A modern Tic-Tac-Toe game built with Swift and SpriteKit for iOS, featuring smoo
 
 **This is an iOS application that requires macOS and Xcode to build and run.**
 
-- ✅ **Supported**: macOS with Xcode 15+
+- ✅ **Supported**: macOS with Xcode 26+
 - ❌ **Not Supported**: GitHub Codespaces, Linux, Windows, or containerized development
 
 While you can use GitHub Codespaces or VS Code Dev Containers to:
@@ -25,9 +25,9 @@ You **cannot** build or run the iOS app without macOS and Xcode.
 ## 📋 Requirements
 
 ### For Building & Running
-- **macOS** 14.0 or later
-- **Xcode** 15.0 or later
-- **iOS Simulator** or a physical iOS device running iOS 17.0+
+- **macOS** supported by Xcode 26
+- **Xcode** 26.0 or later
+- **iOS Simulator** or a physical iOS device running iOS 26.0+
 
 ### For Code Editing Only
 - Any platform with VS Code and the Swift extension (syntax highlighting only)
@@ -114,15 +114,15 @@ xcodebuild test \
 
 ## 🛠️ Technology Stack
 
-- **Language**: Swift 6.0+
+- **Language mode**: Swift 5
 - **Framework**: SpriteKit
-- **Platform**: iOS 17.0+
+- **Platform**: iOS 26.0+
 - **Services**: Game Center
 - **Architecture**: Scene-based SpriteKit (GameScene + game board/model + renderer/animator components)
 
 ## 📱 Minimum iOS Version
 
-iOS 17.0+ (targets the latest iOS features and APIs)
+iOS 26.0+ (required by the Apple Intelligence features used by the app)
 
 ## 🤝 Contributing
 

@@ -38,30 +38,20 @@ jobs:
     - name: List Available Schemes
       run: xcodebuild -list -project "${{ env.PROJECT }}"
       
-    - name: Build for iOS Simulator
+    - name: Build and Test
       run: |
-        xcodebuild clean build \
+        set -o pipefail
+        xcodebuild clean test \
           -project "${{ env.PROJECT }}" \
           -scheme "${{ env.SCHEME }}" \
           -configuration ${{ env.CONFIGURATION }} \
           -sdk iphonesimulator \
           -destination 'platform=iOS Simulator,name=iPhone 16 Pro,OS=latest' \
+          -derivedDataPath build \
           CODE_SIGN_IDENTITY="" \
           CODE_SIGNING_REQUIRED=NO \
           CODE_SIGNING_ALLOWED=NO \
-          | xcpretty || exit 1
-          
-    - name: Run Tests (if available)
-      run: |
-        xcodebuild test \
-          -project "${{ env.PROJECT }}" \
-          -scheme "${{ env.SCHEME }}" \
-          -sdk iphonesimulator \
-          -destination 'platform=iOS Simulator,name=iPhone 16 Pro,OS=latest' \
-          CODE_SIGN_IDENTITY="" \
-          CODE_SIGNING_REQUIRED=NO \
-          CODE_SIGNING_ALLOWED=NO \
-          | xcpretty || echo "No tests found or tests failed - continuing"
+          | xcpretty
           
     - name: Archive Build Artifacts
       if: success()
@@ -69,6 +59,6 @@ jobs:
       with:
         name: ios-build
         path: |
-          build/**/*.app
+          build/Build/Products/Release-iphonesimulator/*.app
         retention-days: 7
         if-no-files-found: warn

@@ -364,20 +364,20 @@ final class PuzzleGenerator {
         
         // MARK: Intermediate Puzzles - Defensive
         
-        // Puzzle 9: Fork defense (X to move)
+        // Puzzle 9: Column defense (X to move)
         // O - -
-        // - O -
+        // O X -
         // - - X
         puzzles.append(GamePuzzle(
             id: "intermediate_defend_1",
             type: .defensive,
             difficulty: .intermediate,
-            xMask: 0b000_000_001,
-            oMask: 0b100_010_000,
+            xMask: 0b000_010_001,
+            oMask: 0b100_100_000,
             currentPlayer: .x,
             solution: [6],
-            hint: "Block the diagonal threat!",
-            tags: ["block", "diagonal", "fork"]
+            hint: "Block the column threat!",
+            tags: ["block", "column"]
         ))
         
         // MARK: Advanced Puzzles - Two Move Wins
@@ -427,27 +427,27 @@ final class PuzzleGenerator {
             xMask: 0b101_000_000,
             oMask: 0b010_010_000,
             currentPlayer: .x,
-            solution: [8],
-            hint: "Stop the diagonal!",
+            solution: [7],
+            hint: "Stop the column!",
             tags: ["block", "critical"]
         ))
         
         // MARK: Expert Puzzles
         
-        // Puzzle 13: Expert fork (X to move)
-        // X - -
-        // - O -
-        // - - X
+        // Puzzle 13: Crowded-board diagonal (X to move)
+        // X O -
+        // O X -
+        // O X -
         puzzles.append(GamePuzzle(
             id: "expert_fork_1",
             type: .oneMove,
             difficulty: .expert,
-            xMask: 0b100_000_001,
-            oMask: 0b000_010_000,
+            xMask: 0b100_010_010,
+            oMask: 0b010_100_100,
             currentPlayer: .x,
-            solution: [1],
-            hint: "Create an unstoppable position!",
-            tags: ["fork", "advanced"]
+            solution: [8],
+            hint: "Complete the diagonal!",
+            tags: ["diagonal", "advanced"]
         ))
         
         // Puzzle 14: Expert two-move (O to move)

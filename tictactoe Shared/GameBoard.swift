@@ -10,7 +10,7 @@ import Foundation
 // MARK: - Player
 
 /// Represents a player in the tic-tac-toe game.
-public enum Player: Equatable, Hashable {
+public enum Player: String, Codable, Equatable, Hashable, Sendable {
     case x
     case o
     
@@ -41,7 +41,7 @@ public enum Player: Equatable, Hashable {
 /// ---------
 /// 6 | 7 | 8
 /// ```
-public struct GameBoard {
+public struct GameBoard: Sendable {
     
     // MARK: - Types
     
@@ -89,6 +89,14 @@ public struct GameBoard {
     
     /// Creates a new game board with empty state.
     public init() {}
+
+    /// Creates a board from stored game-state masks.
+    init(xMask: Int, oMask: Int, currentPlayer: Player) {
+        self.xMask = xMask
+        self.oMask = oMask
+        self.currentPlayer = currentPlayer
+        self.lastPlayer = currentPlayer.opponent
+    }
     
     // MARK: - Computed Properties
     
@@ -195,6 +203,13 @@ public struct GameBoard {
         } else {
             return nil
         }
+    }
+
+    /// Returns a copy configured for the specified player to move.
+    func settingCurrentPlayer(_ player: Player) -> GameBoard {
+        var copy = self
+        copy.currentPlayer = player
+        return copy
     }
     
     // MARK: - Private Helpers

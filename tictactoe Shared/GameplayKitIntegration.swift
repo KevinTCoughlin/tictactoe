@@ -61,11 +61,14 @@ final class TicTacToeGameModel: NSObject, GKGameModel {
     private var board: GameBoard
     
     /// Players in the game
-    private let players: [TicTacToePlayer]
+    private let gamePlayers: [TicTacToePlayer]
+
+    /// Previous states used by GameplayKit while traversing the game tree.
+    private var boardHistory: [GameBoard] = []
     
     /// Active player (whose turn it is)
     var activePlayer: GKGameModelPlayer? {
-        players.first { $0.player == board.currentPlayer }
+        gamePlayers.first { $0.player == board.currentPlayer }
     }
     
     // MARK: - Initialization
@@ -73,7 +76,7 @@ final class TicTacToeGameModel: NSObject, GKGameModel {
     /// Creates a new game model with the specified board state
     init(board: GameBoard = GameBoard()) {
         self.board = board
-        self.players = [
+        self.gamePlayers = [
             TicTacToePlayer(player: .x),
             TicTacToePlayer(player: .o)
         ]
@@ -84,7 +87,7 @@ final class TicTacToeGameModel: NSObject, GKGameModel {
     
     /// Returns all players in the game
     var players: [GKGameModelPlayer]? {
-        players.map { $0 as GKGameModelPlayer }
+        gamePlayers.map { $0 as GKGameModelPlayer }
     }
     
     /// Returns array of valid moves for the current player
@@ -112,18 +115,17 @@ final class TicTacToeGameModel: NSObject, GKGameModel {
     /// Applies a move to the game model
     func apply(_ gameModelUpdate: GKGameModelUpdate) {
         guard let move = gameModelUpdate as? TicTacToeMove else { return }
-        _ = board.makeMove(at: move.cellIndex)
+        var updatedBoard = board
+        guard updatedBoard.makeMove(at: move.cellIndex) else { return }
+        boardHistory.append(board)
+        board = updatedBoard
     }
     
     /// Reverses a move (required for minimax algorithm)
     func unapplyGameModelUpdate(_ gameModelUpdate: GKGameModelUpdate) {
-        // For minimax to work efficiently, we would need to undo moves.
-        // Since our GameBoard uses immutable properties, we handle this by
-        // making copies before applying moves in the strategist.
-        // This is acceptable for tic-tac-toe's small state space.
-        
-        // Note: GKMinmaxStrategist will use copy() to create snapshots,
-        // so we don't need explicit undo functionality.
+        guard gameModelUpdate is TicTacToeMove,
+              let previousBoard = boardHistory.popLast() else { return }
+        board = previousBoard
     }
     
     /// Creates a deep copy of the game model
@@ -136,6 +138,7 @@ final class TicTacToeGameModel: NSObject, GKGameModel {
     func setGameModel(_ gameModel: GKGameModel) {
         guard let other = gameModel as? TicTacToeGameModel else { return }
         self.board = other.board
+        boardHistory.removeAll()
     }
     
     /// Scores the current board state for the given player
@@ -249,7 +252,8 @@ final class PuzzleStrategist {
         let model = TicTacToeGameModel(board: board)
         strategist.gameModel = model
         
-        guard let move = strategist.bestMove(for: model.activePlayer!) as? TicTacToeMove else {
+        guard let activePlayer = model.activePlayer,
+              let move = strategist.bestMove(for: activePlayer) as? TicTacToeMove else {
             return nil
         }
         
@@ -285,11 +289,8 @@ final class PuzzleStrategist {
     /// - Parameter board: The current board state
     /// - Returns: Array of cell indices that block opponent's winning move
     func findBlockingMoves(for board: GameBoard) -> [Int] {
-        var blockingMoves: [Int] = []
-        
         // Check opponent's winning moves
-        var opponentBoard = board
-        opponentBoard.currentPlayer = board.currentPlayer.opponent
+        let opponentBoard = board.settingCurrentPlayer(board.currentPlayer.opponent)
         
         let opponentWinningMoves = findWinningMoves(for: opponentBoard)
         
@@ -346,12 +347,13 @@ final class PuzzleStrategist {
         let model = TicTacToeGameModel(board: board)
         strategist.gameModel = model
         
-        guard let bestMove = strategist.bestMove(for: model.activePlayer!) as? TicTacToeMove else {
+        guard let activePlayer = model.activePlayer,
+              let bestMove = strategist.bestMove(for: activePlayer) as? TicTacToeMove else {
             return .beginner
         }
         
         // Get all valid moves
-        guard let allMoves = model.gameModelUpdates(for: model.activePlayer!) as? [TicTacToeMove] else {
+        guard let allMoves = model.gameModelUpdates(for: activePlayer) as? [TicTacToeMove] else {
             return .beginner
         }
         

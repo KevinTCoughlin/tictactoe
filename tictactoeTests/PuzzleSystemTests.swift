@@ -166,7 +166,8 @@ final class PuzzleSystemTests: XCTestCase {
         let board = GameBoard()
         let model = TicTacToeGameModel(board: board)
         
-        guard let moves = model.gameModelUpdates(for: model.activePlayer!) as? [TicTacToeMove] else {
+        guard let activePlayer = model.activePlayer,
+              let moves = model.gameModelUpdates(for: activePlayer) as? [TicTacToeMove] else {
             XCTFail("Failed to get moves")
             return
         }
@@ -184,6 +185,17 @@ final class PuzzleSystemTests: XCTestCase {
         
         let currentBoard = model.currentBoard
         XCTAssertTrue(currentBoard.isCellOccupied(at: 0))
+    }
+
+    func testTicTacToeGameModelUnapplyMove() {
+        let model = TicTacToeGameModel()
+        let move = TicTacToeMove(cellIndex: 0)
+
+        model.apply(move)
+        model.unapplyGameModelUpdate(move)
+
+        XCTAssertFalse(model.currentBoard.isCellOccupied(at: 0))
+        XCTAssertEqual(model.currentBoard.currentPlayer, .x)
     }
     
     func testPuzzleStrategistFindBestMove() {
