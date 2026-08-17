@@ -96,7 +96,9 @@ final class PuzzleManager: ObservableObject {
         solved: Bool,
         timeInSeconds: TimeInterval
     ) {
-        let solvedDailyPuzzle = puzzle.id == dailyPuzzle?.id && solved
+        let solvedDailyPuzzle = puzzle.id == dailyPuzzle?.id &&
+            solved &&
+            !isDailyPuzzleCompleted
 
         // Update user profile
         userProfile.recordPuzzleAttempt(

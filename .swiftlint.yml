@@ -1,0 +1,19 @@
+disabled_rules:
+  - cyclomatic_complexity
+  - file_length
+  - function_body_length
+  - identifier_name
+  - todo
+  - trailing_whitespace
+  - type_body_length
+
+opt_in_rules:
+  - empty_count
+
+excluded:
+  - build
+  - DerivedData
+
+line_length:
+  warning: 150
+  error: 200

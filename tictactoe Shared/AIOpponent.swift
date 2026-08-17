@@ -268,7 +268,7 @@ public final class AIOpponent {
         }
         
         // 5. Take any available move
-        return availableMoves.randomElement()!
+        return availableMoves.randomElement() ?? availableMoves[0]
     }
     
     private func findWinningMove(for board: GameBoard, player: Player) -> Int? {

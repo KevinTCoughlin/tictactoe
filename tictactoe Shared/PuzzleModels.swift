@@ -138,28 +138,11 @@ public struct GamePuzzle: Codable, Identifiable {
     
     /// Creates a GameBoard instance from this puzzle state
     public var board: GameBoard {
-        var gameBoard = GameBoard()
-        // Reconstruct the board from bitmasks
-        for cellIndex in 0..<9 {
-            let bitMask = 1 << (8 - cellIndex)
-            if (xMask & bitMask) != 0 {
-                // Place X
-                var tempBoard = gameBoard
-                tempBoard.currentPlayer = .x
-                _ = tempBoard.makeMove(at: cellIndex)
-                gameBoard = tempBoard
-            } else if (oMask & bitMask) != 0 {
-                // Place O
-                var tempBoard = gameBoard
-                tempBoard.currentPlayer = .o
-                _ = tempBoard.makeMove(at: cellIndex)
-                gameBoard = tempBoard
-            }
-        }
-        // Ensure current player is set correctly
-        var finalBoard = gameBoard
-        finalBoard.currentPlayer = currentPlayer
-        return finalBoard
+        GameBoard(
+            xMask: xMask,
+            oMask: oMask,
+            currentPlayer: currentPlayer
+        )
     }
     
     /// Validates if a move is part of the correct solution
