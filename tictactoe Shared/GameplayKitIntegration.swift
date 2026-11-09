@@ -103,10 +103,8 @@ final class TicTacToeGameModel: NSObject, GKGameModel {
         
         // Return all empty cells as valid moves
         var moves: [TicTacToeMove] = []
-        for cellIndex in 0..<9 {
-            if !board.isCellOccupied(at: cellIndex) {
-                moves.append(TicTacToeMove(cellIndex: cellIndex))
-            }
+        for cellIndex in 0..<9 where !board.isCellOccupied(at: cellIndex) {
+            moves.append(TicTacToeMove(cellIndex: cellIndex))
         }
         
         return moves

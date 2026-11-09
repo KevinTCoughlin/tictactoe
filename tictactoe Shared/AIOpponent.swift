@@ -274,11 +274,9 @@ public final class AIOpponent {
     private func findWinningMove(for board: GameBoard, player: Player) -> Int? {
         let availableMoves = getAvailableMoves(for: board)
         
-        for move in availableMoves {
-            // Check if this move would create a win by examining the board state
-            if wouldWin(board: board, player: player, move: move) {
-                return move
-            }
+        // Return the first move that would create a win by examining the board state
+        for move in availableMoves where wouldWin(board: board, player: player, move: move) {
+            return move
         }
         
         return nil
@@ -294,10 +292,8 @@ public final class AIOpponent {
         let hypotheticalMask = currentMask | cellBit
         
         // Check if the hypothetical mask matches any winning pattern
-        for pattern in GameBoard.winningPatterns {
-            if (hypotheticalMask & pattern.mask) == pattern.mask {
-                return true
-            }
+        for pattern in GameBoard.winningPatterns where (hypotheticalMask & pattern.mask) == pattern.mask {
+            return true
         }
         
         return false

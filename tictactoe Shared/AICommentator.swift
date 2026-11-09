@@ -437,12 +437,12 @@ public struct CommentaryView: View {
                 Spacer()
                 
                 // Voice toggle
-                Button(action: {
+                Button {
                     commentator.voiceEnabled.toggle()
                     if !commentator.voiceEnabled {
                         commentator.stopSpeaking()
                     }
-                }) {
+                } label: {
                     Image(systemName: commentator.voiceEnabled ? "speaker.wave.3.fill" : "speaker.slash.fill")
                         .foregroundStyle(commentator.voiceEnabled ? .blue : .gray)
                 }
@@ -493,7 +493,7 @@ public struct CommentaryView: View {
         .padding()
         .background(Color.orange.opacity(0.1))
         .cornerRadius(12)
-        .onChange(of: lastMove) { oldValue, newValue in
+        .onChange(of: lastMove) { _, newValue in
             if let move = newValue, let player = lastPlayer {
                 Task {
                     await commentOnMove(move, player: player)

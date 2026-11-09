@@ -50,7 +50,7 @@ You **cannot** build or run the iOS app without macOS and Xcode.
 
 3. **Select a target:**
    - Choose "tictactoe iOS" scheme
-   - Select an iOS Simulator (e.g., iPhone 16 Pro) or connected device
+   - Select an iOS Simulator (e.g., iPhone 17 Pro) or connected device
 
 4. **Build and Run:**
    - Press `⌘R` or click the Play button
@@ -63,7 +63,7 @@ xcodebuild -project tictactoe.xcodeproj \
   -scheme "tictactoe iOS" \
   -configuration Debug \
   -sdk iphonesimulator \
-  -destination 'platform=iOS Simulator,name=iPhone 16 Pro'
+  -destination 'platform=iOS Simulator,name=iPhone 17 Pro'
 ```
 
 ## 🏗️ Project Structure
@@ -109,7 +109,7 @@ Or from command line (macOS only):
 xcodebuild test \
   -project tictactoe.xcodeproj \
   -scheme "tictactoe iOS" \
-  -destination 'platform=iOS Simulator,name=iPhone 16 Pro'
+  -destination 'platform=iOS Simulator,name=iPhone 17 Pro'
 ```
 
 ## 🛠️ Technology Stack
