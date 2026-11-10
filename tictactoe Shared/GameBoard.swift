@@ -46,7 +46,7 @@ public struct GameBoard: Sendable {
     // MARK: - Types
     
     /// Represents a winning pattern with its bitmask and visual endpoints.
-    typealias WinningPattern = (mask: Int, startCell: Int, endCell: Int)
+    typealias WinningPattern = (mask: Int, startCell: Int, endCell: Int) // swiftlint:disable:this large_tuple
     
     // MARK: - State
     
