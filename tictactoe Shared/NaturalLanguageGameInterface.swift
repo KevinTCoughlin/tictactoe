@@ -106,7 +106,7 @@ public final class NaturalLanguageGameInterface {
         }
         
         // Strategic suggestions
-        if board.moveHistory.count > 2 {
+        if board.moveCount > 2 {
             suggestions.append("Block their win")
             suggestions.append("Set up a fork")
         }
@@ -171,7 +171,7 @@ public final class NaturalLanguageGameInterface {
         The player said: "\(command)"
         
         Current player: \(board.currentPlayer.symbol)
-        Moves made so far: \(board.moveHistory.count)
+        Moves made so far: \(board.moveCount)
         
         Current board state:
         """

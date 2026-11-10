@@ -182,7 +182,7 @@ public final class AICommentator: ObservableObject {
         \(describeBoardState(board))
         
         Current player: \(board.currentPlayer.symbol)
-        Moves made: \(board.moveHistory.count)
+        Moves made: \(board.moveCount)
         
         Provide brief analysis of the current state of the game and momentum. Keep it to 2 sentences.
         """
@@ -336,7 +336,7 @@ public final class AICommentator: ObservableObject {
         Current board:
         \(describeBoardState(board))
         
-        Move count: \(board.moveHistory.count)
+        Move count: \(board.moveCount)
         
         \(gameHistory.isEmpty ? "" : "Previous commentary: \(gameHistory.last!)")
         

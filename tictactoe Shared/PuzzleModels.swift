@@ -478,7 +478,7 @@ public struct PuzzleAttempt: Codable {
     }
     
     /// Gets the current device information in a cross-platform way
-    private static func currentDeviceInfo() -> String {
+    public static func currentDeviceInfo() -> String {
         #if os(iOS) || os(tvOS)
         return UIDevice.current.model
         #elseif os(OSX)
