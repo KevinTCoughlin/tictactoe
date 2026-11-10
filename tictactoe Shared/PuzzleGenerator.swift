@@ -400,16 +400,16 @@ final class PuzzleGenerator {
         
         // Puzzle 11: Forced win sequence (O to move)
         // - X -
-        // - O X
-        // - - -
+        // O O X
+        // - X -
         puzzles.append(GamePuzzle(
             id: "advanced_twomove_2",
             type: .twoMove,
             difficulty: .advanced,
-            xMask: 0b010_001_000,
-            oMask: 0b000_010_000,
+            xMask: 0b010_001_010,
+            oMask: 0b000_110_000,
             currentPlayer: .o,
-            solution: [0, 8], // Create fork threat
+            solution: [0, 8], // Corner forks the 0-4-8 diagonal and 0-3-6 column
             hint: "Find the forcing sequence!",
             tags: ["two_move", "force"]
         ))
@@ -452,16 +452,16 @@ final class PuzzleGenerator {
         
         // Puzzle 14: Expert two-move (O to move)
         // - X -
-        // X O -
-        // - - -
+        // X O O
+        // - X -
         puzzles.append(GamePuzzle(
             id: "expert_twomove_1",
             type: .twoMove,
             difficulty: .expert,
-            xMask: 0b010_100_000,
-            oMask: 0b000_010_000,
+            xMask: 0b010_100_010,
+            oMask: 0b000_011_000,
             currentPlayer: .o,
-            solution: [2, 8],
+            solution: [2, 6], // Corner forks the 2-4-6 diagonal and 2-5-8 column
             hint: "Master-level tactics required!",
             tags: ["two_move", "expert"]
         ))
