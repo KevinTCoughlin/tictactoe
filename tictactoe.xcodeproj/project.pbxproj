@@ -47,16 +47,28 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Actions.sks,
+				AICommentaryManager.swift,
+				AICommentator.swift,
+				AIGameCoach.swift,
+				AIGameManager.swift,
+				AIOpponent.swift,
 				Assets.xcassets,
 				GameBoard.swift,
 				GameCenterButton.swift,
 				GameCenterStatusView.swift,
 				GameKitManager.swift,
+				GameplayKitIntegration.swift,
 				GameScene.sks,
 				GameScene.swift,
 				GridLayout.swift,
 				GridRenderer.swift,
 				MarkRenderer.swift,
+				NaturalLanguageGameInterface.swift,
+				PuzzleGenerator.swift,
+				PuzzleManager.swift,
+				PuzzleModels.swift,
+				PuzzleNotificationManager.swift,
+				PuzzleScene.swift,
 				WinningLineAnimator.swift,
 			);
 			target = 0BB1DFA72EB7C92C00B5F7ED /* tictactoe iOS */;
@@ -474,7 +486,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 9L45FNA7XM;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.cascadiacollections.tictactoeTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -497,7 +509,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 9L45FNA7XM;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.cascadiacollections.tictactoeTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";

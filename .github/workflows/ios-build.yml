@@ -48,11 +48,41 @@ jobs:
           -sdk iphonesimulator \
           -destination 'platform=iOS Simulator,name=iPhone 17 Pro,OS=latest' \
           -derivedDataPath build \
+          -resultBundlePath TestResults.xcresult \
+          -test-timeouts-enabled YES \
+          -default-test-execution-time-allowance 120 \
+          ENABLE_TESTABILITY=YES \
           CODE_SIGN_IDENTITY="" \
           CODE_SIGNING_REQUIRED=NO \
           CODE_SIGNING_ALLOWED=NO \
+          | tee xcodebuild.log \
           | xcpretty
-          
+
+    # xcpretty can't parse Swift Testing output or runner crashes/hangs,
+    # so surface the real failures from the result bundle.
+    - name: Summarize Test Failures
+      if: failure()
+      run: |
+        if [ -d TestResults.xcresult ]; then
+          xcrun xcresulttool get test-results summary --path TestResults.xcresult || true
+          xcrun xcresulttool get test-results tests --path TestResults.xcresult \
+            | jq -r '.. | objects | select(.nodeType == "Test Case" and .result != "Passed")
+                | "\(.result): \(.nodeIdentifier // .name)",
+                  (.children[]? | select(.nodeType == "Failure Message") | "    \(.name)")' || true
+        fi
+        grep -nE "error|crash|Restarting after|failed|timed out" xcodebuild.log | grep -v warning | tail -60 || true
+
+    - name: Upload Test Results
+      if: failure()
+      uses: actions/upload-artifact@v7
+      with:
+        name: test-results
+        path: |
+          TestResults.xcresult
+          xcodebuild.log
+        retention-days: 7
+        if-no-files-found: ignore
+
     - name: Archive Build Artifacts
       if: success()
       uses: actions/upload-artifact@v7

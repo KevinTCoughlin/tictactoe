@@ -104,6 +104,11 @@ public struct GameBoard: Sendable {
     public var occupiedMask: Int {
         xMask | oMask
     }
+
+    /// The number of moves made so far.
+    public var moveCount: Int {
+        occupiedMask.nonzeroBitCount
+    }
     
     /// The winning player, if any.
     ///

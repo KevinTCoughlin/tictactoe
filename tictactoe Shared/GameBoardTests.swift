@@ -80,9 +80,12 @@ struct GameBoardTests {
     func invalidIndex() {
         var board = GameBoard()
         
-        #expect(!board.makeMove(at: -1))
-        #expect(!board.makeMove(at: 9))
-        #expect(!board.makeMove(at: 100))
+        let movedNeg1 = board.makeMove(at: -1)
+        #expect(!movedNeg1)
+        let moved9 = board.makeMove(at: 9)
+        #expect(!moved9)
+        let moved100 = board.makeMove(at: 100)
+        #expect(!moved100)
     }
     
     @Test("Cannot move after game is over")
@@ -100,7 +103,8 @@ struct GameBoardTests {
         board.makeMove(at: 2) // X wins
         
         #expect(board.isGameOver == true)
-        #expect(!board.makeMove(at: 5))
+        let moved5 = board.makeMove(at: 5)
+        #expect(!moved5)
     }
     
     // MARK: - Horizontal Win Tests
@@ -267,7 +271,7 @@ struct GameBoardTests {
         // X X O
         // O O X
         // X O X
-        let moves = [0, 2, 1, 3, 4, 6, 5, 7, 8]
+        let moves = [0, 2, 1, 3, 5, 4, 6, 7, 8]
         for move in moves {
             board.makeMove(at: move)
         }
@@ -334,7 +338,8 @@ struct GameBoardTests {
         board.reset()
         
         #expect(board.isGameOver == false)
-        #expect(board.makeMove(at: 0) == true)
+        let moved0 = board.makeMove(at: 0)
+        #expect(moved0)
     }
     
     // MARK: - Query Tests

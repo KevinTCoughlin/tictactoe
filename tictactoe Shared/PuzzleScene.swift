@@ -525,10 +525,10 @@ final class PuzzleScene: SKScene {
         let size = layout.cellSize
         
         // Create highlight shape
-        let highlight = SKShapeNode(rectOf: CGSize(width: size * 0.9, height: size * 0.9), cornerRadius: 8)
+        let highlight = SKShapeNode(rectOf: CGSize(width: size.width * 0.9, height: size.height * 0.9), cornerRadius: 8)
         highlight.strokeColor = Configuration.hintColor
         highlight.lineWidth = 3
-        highlight.fillColor = .clear
+        highlight.fillColor = SKColor.clear
         highlight.position = position
         highlight.alpha = 0
         
